@@ -2714,6 +2714,7 @@ GameObject:
   - component: {fileID: 1727107630}
   - component: {fileID: 1727107629}
   - component: {fileID: 1727107628}
+  - component: {fileID: 1727107632}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2797,9 +2798,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1727107628}
-        m_TargetAssemblyTypeName: botonPrueba, Assembly-CSharp
-        m_MethodName: bla
+      - m_Target: {fileID: 1727107632}
+        m_TargetAssemblyTypeName: TextToSpeech, Assembly-CSharp
+        m_MethodName: StartSpeech
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2847,6 +2848,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727107626}
   m_CullTransparentMesh: 1
+--- !u!114 &1727107632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727107626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cef0015e8394eefac5f408eb6d765a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: hola morena
 --- !u!1 &1735822528
 GameObject:
   m_ObjectHideFlags: 0
