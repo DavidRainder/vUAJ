@@ -39,6 +39,14 @@ public class AccesibilityManager : MonoBehaviour
 
     public TMP_FontAsset currentFontAsset;
     public float currentFontSize;
+    public bool applyFonts = false;
+
+    public void setDislexiaMode(System.Boolean dislexiaMode)
+    {
+        applyFonts = dislexiaMode;
+        if (!applyFonts) fontChange(null);
+        else fontChange(currentFontAsset);
+    }
 
     public void onFontSizeChanged(System.Single value)
     {
@@ -49,6 +57,6 @@ public class AccesibilityManager : MonoBehaviour
     public void onFontChanged(TMP_FontAsset font)
     {
         currentFontAsset = font;
-        fontChange(font);
+        if (applyFonts) fontChange(font);
     }
 }

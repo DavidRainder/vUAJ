@@ -4,6 +4,7 @@ using UnityEngine;
 public class FontOptions : MonoBehaviour
 {
     TMP_Text text;
+    TMP_FontAsset OGfont;
     float OGfontsize;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,8 +16,9 @@ public class FontOptions : MonoBehaviour
         text = gameObject.GetComponent<TextMeshProUGUI>();
         if (text)
         {
+            OGfont = text.font;
             OGfontsize = text.fontSize;
-            text.font = AccesibilityManager.Instance.currentFontAsset;
+            if(AccesibilityManager.Instance.applyFonts) text.font = AccesibilityManager.Instance.currentFontAsset;
             text.fontSize = text.fontSize * AccesibilityManager.Instance.currentFontSize;
             text.ForceMeshUpdate(false, true);
         }
@@ -26,7 +28,8 @@ public class FontOptions : MonoBehaviour
     {
         if (text != null)
         {
-            text.font = font;
+            if (font != null) text.font = font;
+            else text.font = OGfont;
             text.ForceMeshUpdate(false, true);
         }
         else Debug.LogWarning("The object does not have a TextMeshPro component so the script doesnt have an effect");

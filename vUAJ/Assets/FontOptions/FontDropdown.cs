@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FontDropdown : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class FontDropdown : MonoBehaviour
     {
         fontDropdown = GetComponent<TMP_Dropdown>();
 
-        //Clear the dropdown just in case
         fontDropdown.ClearOptions();
 
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
@@ -29,7 +29,6 @@ public class FontDropdown : MonoBehaviour
 
     public void UpdateUIFont(int index)
     {
-        //Just to be safe the index specified is within range
         if (index < fonts.Length && index >= 0)
         {
             AccesibilityManager.Instance.onFontChanged(fonts[index]);
