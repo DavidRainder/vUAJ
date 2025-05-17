@@ -10,18 +10,19 @@ public class FontOptions : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AccesibilityManager.Instance.fontSizeChange += changeSize;
-        AccesibilityManager.Instance.fontChange += changeFont;
+        TextAccesibilityManager.Instance.fontSizeChange += changeSize;
+        TextAccesibilityManager.Instance.fontChange += changeFont;
 
         text = gameObject.GetComponent<TextMeshProUGUI>();
         if (text)
         {
             OGfont = text.font;
             OGfontsize = text.fontSize;
-            if(AccesibilityManager.Instance.applyFonts) text.font = AccesibilityManager.Instance.currentFontAsset;
-            text.fontSize = text.fontSize * AccesibilityManager.Instance.currentFontSize;
+            if(TextAccesibilityManager.Instance.applyFonts) text.font = TextAccesibilityManager.Instance.currentFontAsset;
+            text.fontSize = text.fontSize * TextAccesibilityManager.Instance.currentFontSize;
             text.ForceMeshUpdate(false, true);
         }
+        else Debug.LogWarning("The object does not have a TextMeshPro component so the script doesnt have an effect");
     }
 
     void changeFont(TMP_FontAsset font)

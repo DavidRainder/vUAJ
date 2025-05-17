@@ -12,31 +12,42 @@ using System;
 
 public class VolumePerception : MonoBehaviour
 {
-    Mesh mesh;
     [SerializeField]
     Material material;
-    [SerializeField]
-    Color volumeColor = new Color(1, 1, 1, 0.6f);
+
+    Mesh mesh;
+    Collider2D _collider;
+    GameObject border;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        var collider = gameObject.GetComponent<Collider2D>();
-        if (collider != null)
+        VolumePerceptionManager.Instance.changeShowColliders += showCollider;
+
+        _collider = gameObject.GetComponent<Collider2D>();
+        if (_collider != null)
         {
-            GameObject border = new GameObject("border");
+            border = new GameObject("border");
             border.transform.SetParent(gameObject.transform);
 
-            mesh = collider.CreateMesh(true, true);
+            mesh = _collider.CreateMesh(true, true);
             border.AddComponent<MeshFilter>().mesh = mesh;
 
             border.AddComponent<MeshRenderer>().material = material;
 
-            material.color = volumeColor;
+            material.color = VolumePerceptionManager.Instance.volumeColor;
 
             border.GetComponent<MeshRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
 
+            border.SetActive(VolumePerceptionManager.Instance.showColliders);
         }
+        else Debug.LogWarning("The object does not have a Collider2D component so the script doesnt have an effect");
+    }
+
+    void showCollider(bool show)
+    {
+        if (_collider != null)
+            border.SetActive(VolumePerceptionManager.Instance.showColliders);
         else Debug.LogWarning("The object does not have a Collider2D component so the script doesnt have an effect");
     }
 }
