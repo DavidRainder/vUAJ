@@ -4,12 +4,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
+//No hace falta incluir esta clase en un objeto en escena
+//Se encarga del parseo de elementos de JSON para que lo pueda usar TTSSubtitles
 public class JSONParser : MonoBehaviour
 {
     [Serializable]
     private class StringList
     {
-        public List<string> Subtitles; //Same name as identifier in JSON
+        public List<string> Subtitles; //El nombre de esta variable debe ser el mismo que el identificador dentro de JSON
 
     }
 

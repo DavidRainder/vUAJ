@@ -5,23 +5,16 @@ using System.Collections;
 using UnityEngine.UIElements;
 using System.Runtime.InteropServices;
 
-//Add this script to an empy object in the scene
+//Para que la opcion de TTS exista, hay que añadir este script a un objeto vacio en escena
+//Se encarga de importar la DLL y leer lo que se le diga
 public class TTSManager : MonoBehaviour
 {
     //Ativar/desactivar TTS global
     [SerializeField]
     bool TTSactive = false;
 
+    //Instancia de TTS Manager
     public static TTSManager m_Instance;
-
-    [SerializeField]
-    public KeyCode key_say = KeyCode.S; //Decir algo nuevo
-
-    [SerializeField]
-    public KeyCode key_repeat = KeyCode.R; //Repetir lo ya dicho
-
-    [SerializeField]
-    public string text;
 
     private void OnEnable()
     {
@@ -29,7 +22,7 @@ public class TTSManager : MonoBehaviour
         else Destroy(this);
     }
 
-
+    //Funcion que se encarga de que se diga el texto que se le pase
     public void StartSpeech(string _text)
       => ttsrust_say(_text);
 
@@ -42,33 +35,9 @@ public class TTSManager : MonoBehaviour
 
     [DllImport(_dll)] static extern void ttsrust_say(string text);
 
-
-    //Leer subtitulos
-    //Si opcion leer subtitulos activado = llamar a leer subtitulos
-
-    //Leer notificacion
-    //Si boton notificacion TTS activo = llamar a leer notificacion
-    bool notifsActive;
-
-    //Audiodescripcion
-    //Si boton de audiodescripcion de escena activado = leer audiodescripcion
-    //(del dev debe añadir el texto que quiere que se describa en cada momento)
-
+    //Funcion que activa o desactiva las funciones de TTS desde un menu de ajustes general
     public void TTSActivation()
     {
         TTSactive = !TTSactive;
-    }
-
-    void Update()
-    {
-        //if (Input.GetKeyDown(key_say) && elapsedTime >= keyCooldown)
-        //{
-        //    StartSpeech(text);
-        //    elapsedTime = 0f;
-        //}
-        //else
-        //{
-        //    elapsedTime += Time.deltaTime;
-        //}
     }
 }
