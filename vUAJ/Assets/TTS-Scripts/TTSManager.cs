@@ -5,11 +5,14 @@ using System.Collections;
 using UnityEngine.UIElements;
 using System.Runtime.InteropServices;
 
+//Add this script to an empy object in the scene
 public class TTSManager : MonoBehaviour
 {
     //Ativar/desactivar TTS global
+    [SerializeField]
+    bool TTSactive = false;
 
-    private TTSManager m_Instance;
+    public static TTSManager m_Instance;
 
     [SerializeField]
     public KeyCode key_say = KeyCode.S; //Decir algo nuevo
@@ -19,10 +22,6 @@ public class TTSManager : MonoBehaviour
 
     [SerializeField]
     public string text;
-
-    [SerializeField]
-    private float keyCooldown = 2f;
-    private float elapsedTime = 2f;
 
     private void OnEnable()
     {
@@ -49,21 +48,27 @@ public class TTSManager : MonoBehaviour
 
     //Leer notificacion
     //Si boton notificacion TTS activo = llamar a leer notificacion
+    bool notifsActive;
 
     //Audiodescripcion
     //Si boton de audiodescripcion de escena activado = leer audiodescripcion
     //(del dev debe añadir el texto que quiere que se describa en cada momento)
 
+    public void TTSActivation()
+    {
+        TTSactive = !TTSactive;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(key_say) && elapsedTime >= keyCooldown)
-        {
-            StartSpeech(text);
-            elapsedTime = 0f;
-        }
-        else
-        {
-            elapsedTime += Time.deltaTime;
-        }
+        //if (Input.GetKeyDown(key_say) && elapsedTime >= keyCooldown)
+        //{
+        //    StartSpeech(text);
+        //    elapsedTime = 0f;
+        //}
+        //else
+        //{
+        //    elapsedTime += Time.deltaTime;
+        //}
     }
 }
