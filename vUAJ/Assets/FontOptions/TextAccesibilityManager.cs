@@ -3,12 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AccesibilityManager : MonoBehaviour
+public class TextAccesibilityManager : MonoBehaviour
 {
     #region Singleton
-    private static AccesibilityManager _instance = null;
+    private static TextAccesibilityManager _instance = null;
 
-    public static AccesibilityManager Instance
+    public static TextAccesibilityManager Instance
     {
         get
         {

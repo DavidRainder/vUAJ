@@ -2206,7 +2206,7 @@ GameObject:
   - component: {fileID: 861276083}
   - component: {fileID: 861276082}
   m_Layer: 0
-  m_Name: AccesibilityManager
+  m_Name: TextAccesibilityManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

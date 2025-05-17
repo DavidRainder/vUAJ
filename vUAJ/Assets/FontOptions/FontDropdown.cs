@@ -18,7 +18,6 @@ public class FontDropdown : MonoBehaviour
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
         for (int i = 0; i < fonts.Length; i++)
         {
-            //<Font=FontAssetName> Whatever text </font>
             string fontName = fonts[i].name;
 
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(fontName);
@@ -31,7 +30,7 @@ public class FontDropdown : MonoBehaviour
     {
         if (index < fonts.Length && index >= 0)
         {
-            AccesibilityManager.Instance.onFontChanged(fonts[index]);
+            TextAccesibilityManager.Instance.onFontChanged(fonts[index]);
         }
     }
 
