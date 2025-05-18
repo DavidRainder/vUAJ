@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
 
 public enum NotificationPosition { TopCenter, TopLeft, TopRight, BottomLeft, BottomRight }
 public enum NotificationSize { Small, Medium, Large }
@@ -16,7 +17,18 @@ public enum HapticFeedbackType
     Heavy,
     Pulse
 }
-
+public struct NotificationData
+{
+    public string message;
+    public string iconName;
+    public Color color;
+    public string soundName;
+    public HapticFeedbackType haptic;
+    public NotificationPosition position;
+    public NotificationSize size;
+    public NotificationStyle style;
+    public NotificationDuration duration;
+}
 public class NotificationManager : MonoBehaviour
 {
     public static NotificationManager Instance { get; private set; }
@@ -31,6 +43,13 @@ public class NotificationManager : MonoBehaviour
 
     public GameObject notificationPrefab;
     public Transform notificationContainer;
+
+    public UnityEngine.UI.Image blackOverlay;
+    public UnityEngine.UI.Image transparencyOverlay;
+
+    private Queue<NotificationData> notificationQueue = new Queue<NotificationData>();
+    private bool isProcessing = false; 
+
 
     private void Awake()
     {
@@ -57,6 +76,12 @@ public class NotificationManager : MonoBehaviour
     public void SetStyle(NotificationStyle newStyle) => CurrentStyle = CurrentStyle == newStyle ? CurrentStyle : newStyle;
     public void SetType(NotificationLevel newType) => CurrentLevel = CurrentLevel == newType ? CurrentLevel : newType;
     public void SetHapticFeedback(HapticFeedbackType newType) => CurrentHapticFeedback = CurrentHapticFeedback == newType ? CurrentHapticFeedback : newType;
+    public void SetCanvasPreferences(Transform container, UnityEngine.UI.Image black, UnityEngine.UI.Image transparency)
+    {
+        notificationContainer = container;
+        blackOverlay = black;
+        transparencyOverlay = transparency;
+    }
 
     public void NotifyChange()
     {
@@ -70,56 +95,91 @@ public class NotificationManager : MonoBehaviour
 
     public void SpawnNotification(string message, string iconName, Color color, string soundName, HapticFeedbackType haptic)
     {
-        var icon = NotificationAssetLibrary.Instance.GetIcon(iconName);
-        var sound = NotificationAssetLibrary.Instance.GetSound(soundName);
-
-        var notifGO = Instantiate(notificationPrefab, notificationContainer);
-        var ui = notifGO.GetComponent<NotificationUI>();
-
-        if (ui != null)
+        var notificationData = new NotificationData
         {
-            ui.SetUp(
-                message,
-                icon,
-                color,
-                sound,
-                haptic,
-                CurrentPosition,
-                CurrentSize,
-                CurrentStyle,
-                CurrentDuration
-            );
+            message = message,
+            iconName = iconName,
+            color = color,
+            soundName = soundName,
+            haptic = haptic,
+            position = CurrentPosition,
+            size = CurrentSize,
+            style = CurrentStyle,
+            duration = CurrentDuration
+        };
+
+        notificationQueue.Enqueue(notificationData);
+
+        // Start processing if not already processing
+        if (!isProcessing)
+        {
+            StartCoroutine(ProcessNotifications());
         }
-        NotifyChange();
+    }
+    private IEnumerator ProcessNotifications()
+    {
+        isProcessing = true;
+
+        while (notificationQueue.Count > 0)
+        {
+            var notificationData = notificationQueue.Dequeue();
+
+            var icon = NotificationAssetLibrary.Instance.GetIcon(notificationData.iconName);
+            var sound = NotificationAssetLibrary.Instance.GetSound(notificationData.soundName);
+
+            var notifGO = Instantiate(notificationPrefab, notificationContainer);
+            var ui = notifGO.GetComponent<NotificationUI>();
+
+            if (ui != null)
+            {
+                ui.SetUp(
+                    notificationData.message,
+                    icon,
+                    notificationData.color,
+                    sound,
+                    notificationData.haptic,
+                    notificationData.position,
+                    notificationData.size,
+                    notificationData.style,
+                    notificationData.duration
+                );
+            }
+
+            NotifyChange();
+
+            float duration = ((float)notificationData.duration / 1000f) + 3f; 
+            yield return new WaitForSeconds(duration);
+        }
+
+        isProcessing = false;
     }
 
     public void SpawnNotification(string message, string iconName, Color color, string soundName,
         NotificationPosition pos, NotificationSize size, NotificationDuration duration, HapticFeedbackType haptic, NotificationStyle type)
     {
-        var icon = NotificationAssetLibrary.Instance.GetIcon(iconName);
-        var sound = NotificationAssetLibrary.Instance.GetSound(soundName);
-
-        var notifGO = Instantiate(notificationPrefab, notificationContainer);
-        var ui = notifGO.GetComponent<NotificationUI>();
 
         SetPosition(pos);
         SetSize(size);
         SetDuration(duration);
-        if (ui != null)
+        var notificationData = new NotificationData
         {
-            ui.SetUp(
-                message,
-                icon,
-                color,
-                sound,
-                haptic,
-                pos,
-                size,
-                type,
-                duration
-            );
+            message = message,
+            iconName = iconName,
+            color = color,
+            soundName = soundName,
+            haptic = haptic,
+            position = pos,
+            size = size,
+            style = type,
+            duration = duration
+        };
+
+        notificationQueue.Enqueue(notificationData);
+
+        if (!isProcessing)
+        {
+            StartCoroutine(ProcessNotifications());
         }
-        NotifyChange();
     }
 
 }

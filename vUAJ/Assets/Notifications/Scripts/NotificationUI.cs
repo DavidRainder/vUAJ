@@ -8,9 +8,8 @@ public class NotificationUI : MonoBehaviour
     public UnityEngine.UI.Image backgroundImage;  
     public UnityEngine.UI.Image borderImage;
 
-    private GameObject blackOverlay;
-    private Coroutine fadeCoroutine;
-    public UnityEngine.UI.Image blurPreferences;
+    private UnityEngine.UI.Image blackOverlay;
+    public UnityEngine.UI.Image transparencyOverlay;
     public GameObject glowPreferences;
     private Coroutine glowCoroutine;
 
@@ -27,6 +26,14 @@ public class NotificationUI : MonoBehaviour
     private NotificationPosition position;
     private float durationSeconds;
 
+    private void Start()
+    {
+        if (NotificationManager.Instance != null)
+        {
+            blackOverlay = NotificationManager.Instance.blackOverlay.GetComponent<UnityEngine.UI.Image>();
+            transparencyOverlay = NotificationManager.Instance.transparencyOverlay.GetComponent<UnityEngine.UI.Image>();
+        }
+    }
     public void SetUp(
         string text,
         Sprite icon,
@@ -164,7 +171,7 @@ public class NotificationUI : MonoBehaviour
         }
         else
         {
-            while (!Input.anyKeyDown) yield return null;
+            while (!Keyboard.current.escapeKey.isPressed) yield return null;
             yield return AnimateOut();
             Destroy(gameObject);
         }
@@ -277,12 +284,17 @@ public class NotificationUI : MonoBehaviour
         switch (style)
         {
             case NotificationStyle.Black:
-                StartCoroutine(CreateBlackOverlay(Color.black, 0.3f));
+                if (NotificationManager.Instance != null && blackOverlay != null)
+                {
+                    StartCoroutine(FadeIn(blackOverlay, 0f, 1f, 0.3f));
+                }
                 break;
 
             case NotificationStyle.Blur:
-                if (blurPreferences != null)
-                    StartCoroutine(FadeImage(blurPreferences, 0f, 0.5f, 0.3f));
+                if (NotificationManager.Instance != null && transparencyOverlay != null)
+                {
+                    StartCoroutine(FadeIn(transparencyOverlay, 0f, transparencyOverlay.color.a, 0.3f));
+                }
                 break;
 
             case NotificationStyle.Glow:
@@ -301,63 +313,76 @@ public class NotificationUI : MonoBehaviour
 
     private void ResetAllPreferences()
     {
-        if (blackOverlay != null)
-            Destroy(blackOverlay);
+        // Realizamos el FadeOut de blackOverlay y blurPreferences
+        if (NotificationManager.Instance != null && blackOverlay != null)
+        {
+            StartCoroutine(FadeOut(blackOverlay, 1f, 0f, 0.3f));
+        }
 
-        if (blurPreferences != null)
-            blurPreferences.gameObject.SetActive(false);
+        if (NotificationManager.Instance != null && transparencyOverlay != null)
+        {
+            StartCoroutine(FadeOut(transparencyOverlay, transparencyOverlay.color.a, 0f, 0.3f));
+        }
 
+        // Desactivar glowPreferences
         if (glowPreferences != null)
+        {
             glowPreferences.SetActive(false);
+        }
 
         if (glowCoroutine != null)
+        {
             StopCoroutine(glowCoroutine);
+        }
     }
 
-    private IEnumerator CreateBlackOverlay(Color color, float duration = 0.3f)
+    private IEnumerator FadeIn(UnityEngine.UI.Image image, float fromAlpha, float toAlpha, float duration)
     {
-        var canvas = GetComponentInParent<Canvas>();
-        if (canvas == null) yield break;
+        // Asegurarse de que la imagen esté activada
+        if (image != null)
+        {
+            image.gameObject.SetActive(true);
+        }
 
-        blackOverlay = new GameObject("BlackOverlay", typeof(RectTransform), typeof(UnityEngine.UI.Image));
-        blackOverlay.transform.SetParent(canvas.transform, false);
-        blackOverlay.transform.SetAsFirstSibling(); // Fondo
+        Color currentColor = image.color;
+        float startAlpha = fromAlpha;
+        float endAlpha = toAlpha;
 
-        RectTransform rt = blackOverlay.GetComponent<RectTransform>();
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
-
-        var img = blackOverlay.GetComponent<UnityEngine.UI.Image>();
-        color.a = 0f;
-        img.color = color;
+        // Establecer el color inicial
+        image.color = new Color(currentColor.r, currentColor.g, currentColor.b, startAlpha);
 
         float t = 0f;
         while (t < duration)
         {
             t += Time.deltaTime;
-            float alpha = Mathf.Lerp(0f, 1f, t / duration);
-            img.color = new Color(color.r, color.g, color.b, alpha);
+            float alpha = Mathf.Lerp(startAlpha, endAlpha, t / duration);
+            image.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
             yield return null;
         }
-        img.color = new Color(color.r, color.g, color.b, 1f);
+        image.color = new Color(currentColor.r, currentColor.g, currentColor.b, endAlpha);
     }
 
-
-    private IEnumerator FadeImage(UnityEngine.UI.Image image, float fromAlpha, float toAlpha, float duration)
+    private IEnumerator FadeOut(UnityEngine.UI.Image image, float fromAlpha, float toAlpha, float duration)
     {
-        image.gameObject.SetActive(true);
-        Color c = image.color;
-        float elapsed = 0f;
-        while (elapsed < duration)
+        Color currentColor = image.color;
+        float startAlpha = fromAlpha;
+        float endAlpha = toAlpha;
+
+        float t = 0f;
+        while (t < duration)
         {
-            elapsed += Time.deltaTime;
-            float alpha = Mathf.Lerp(fromAlpha, toAlpha, elapsed / duration);
-            image.color = new Color(c.r, c.g, c.b, alpha);
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(startAlpha, endAlpha, t / duration);
+            image.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
             yield return null;
         }
-        image.color = new Color(c.r, c.g, c.b, toAlpha);
+        image.color = new Color(currentColor.r, currentColor.g, currentColor.b, endAlpha);
+
+        // Desactivar la imagen después del fade out
+        if (image != null)
+        {
+            image.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator GlowPulse(GameObject glowRoot, Color baseColor)
