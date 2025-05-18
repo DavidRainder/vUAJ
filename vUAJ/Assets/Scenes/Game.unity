@@ -786,6 +786,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1514363250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8658827826151660416, guid: 09350495185a66d478dc21270686bf1b, type: 3}
+  m_PrefabInstance: {fileID: 1514363247}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1580843666 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4987433260566997422, guid: 41c2e8faf31f0e142b19c01fcb481719, type: 3}
@@ -1579,6 +1584,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1790583930}
     m_Modifications:
+    - target: {fileID: 2034929699001604834, guid: 61748218b4a465545867c629a255e17e, type: 3}
+      propertyPath: currentHUD
+      value: 
+      objectReference: {fileID: 1514363250}
     - target: {fileID: 3449160698473651522, guid: 61748218b4a465545867c629a255e17e, type: 3}
       propertyPath: m_Name
       value: NotificatioCanvas

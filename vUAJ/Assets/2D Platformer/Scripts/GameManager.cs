@@ -33,7 +33,6 @@ namespace Platformer
         void Start()
         {
             player = GameObject.Find("Player").GetComponent<PlayerController>();
-            HUDManager.Instance.loadCurrentHUD();
         }
 
         void Update()

@@ -5,6 +5,7 @@ public class GameSceneController : MonoBehaviour
     public Transform canvasTransform;
     public UnityEngine.UI.Image blackOverlay;
     public UnityEngine.UI.Image transparencyOverlay;
+    public GameObject currentHUD;
 
     void Start()
     {
@@ -12,6 +13,10 @@ public class GameSceneController : MonoBehaviour
         if (NotificationManager.Instance != null && canvasTransform != null)
         {
             NotificationManager.Instance.SetCanvasPreferences(canvasTransform, blackOverlay, transparencyOverlay);
+        }
+        if(HUDManager.Instance != null && currentHUD != null)
+        {
+            HUDManager.Instance.loadCurrentHUD(currentHUD);
         }
     }
 }

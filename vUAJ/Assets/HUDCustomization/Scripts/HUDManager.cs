@@ -93,8 +93,17 @@ public class HUDManager : MonoBehaviour
         {
             Transform tr = currHUD.transform.GetChild(i);
             ObjectInfo aux = HUDInfo[tr.gameObject.name];
-            aux.scaleFactor = scaleFactor;
-            aux.shadowFactor = shadowFactor;
+
+            if(type == HUDTypes.customHUD)
+            {
+                aux.scaleFactor = scaleFactor;
+                aux.shadowFactor = shadowFactor;
+            }
+            else
+            {
+                aux.scaleFactor = 1.0f;
+                aux.shadowFactor = 0.0f;
+            }
             aux.pos = tr.GetComponent<RectTransform>().anchoredPosition3D;
             HUDInfo[tr.gameObject.name] = aux;
             string info = JsonUtility.ToJson(aux);
@@ -131,6 +140,7 @@ public class HUDManager : MonoBehaviour
                     ObjectInfo data = JsonUtility.FromJson<ObjectInfo>(obj);
                     RectTransform rect = tr.GetComponent<RectTransform>();
                     rect.anchoredPosition3D = data.pos;
+                    rect.anchoredPosition3D = new Vector3(rect.anchoredPosition3D.x, rect.anchoredPosition3D.y, 0);
                     rect.localScale = data.baseScale * data.scaleFactor;
                     UnityEngine.UI.DropShadow shadow = tr.gameObject.GetComponent<UnityEngine.UI.DropShadow>();
                     if(shadow != null)
@@ -186,8 +196,8 @@ public class HUDManager : MonoBehaviour
     /// <summary>
     /// Load HUD segun selección del player en Menú
     /// </summary>
-    public void loadCurrentHUD()
+    public void loadCurrentHUD(GameObject obj)
     {
-        applySavedConfigToHUD(HUDprefab, currentSelection); // Default or custom
+        applySavedConfigToHUD(obj, currentSelection); // Default or custom
     }
 }

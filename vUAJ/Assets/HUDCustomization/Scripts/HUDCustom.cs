@@ -49,6 +49,7 @@ public class HUDCustom : MonoBehaviour
         foreach (Transform tr in defaultHUD.transform)
         {
             HUDInfo.Add(tr.name, new HUDManager.ObjectInfo (tr.localScale, 1, 0, tr.position));
+            removeInteractableComp(tr);
         }
         HUDManager.Instance.saveConfig(HUDManager.HUDTypes.defaultHUD, HUDInfo); // Save
 
@@ -70,6 +71,7 @@ public class HUDCustom : MonoBehaviour
                 shadow.effectColor = Color.black;
                 shadow.EffectDistance = new Vector2(0f, 0f);
             }
+            removeInteractableComp(tr);
         }
 
         // Settings iniciales 
@@ -77,6 +79,24 @@ public class HUDCustom : MonoBehaviour
        // HUDManager.Instance.SetCurrentHUDType(HUDManager.HUDTypes.defaultHUD); 
         defaultHUD.SetActive(false);
         defaultFakeSettings.SetActive(false);
+    }
+    void removeInteractableComp(Transform tr)
+    {
+        Button [] button; 
+        if ((button=tr.gameObject.GetComponentsInChildren<Button>()) != null) {
+            for (int i = 0; i < button.Length; i++)
+            {
+                button[i].interactable = false;
+            }
+        }
+        Slider[] slider;
+        if ((slider = tr.gameObject.GetComponentsInChildren<Slider>()) != null)
+        {
+            for (int i = 0; i < slider.Length; i++)
+            {
+                slider[i].interactable = false;
+            }
+        }
     }
     public void saveCustom()
     {
