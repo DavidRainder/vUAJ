@@ -14,9 +14,10 @@ public class VolumePerception : MonoBehaviour
 {
     [SerializeField]
     Material material;
+    [SerializeField]
+    Collider2D _collider;
 
     Mesh mesh;
-    Collider2D _collider;
     GameObject border;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,7 +25,8 @@ public class VolumePerception : MonoBehaviour
     {
         VolumePerceptionManager.Instance.changeShowColliders += showCollider;
 
-        _collider = gameObject.GetComponent<Collider2D>();
+        if(_collider == null) _collider = gameObject.GetComponent<Collider2D>();
+       
         if (_collider != null)
         {
             border = new GameObject("border");
