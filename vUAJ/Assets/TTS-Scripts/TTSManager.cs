@@ -24,7 +24,12 @@ public class TTSManager : MonoBehaviour
 
     //Funcion que se encarga de que se diga el texto que se le pase
     public void StartSpeech(string _text)
-      => ttsrust_say(_text);
+    {
+        if (TTSactive)
+        {
+            ttsrust_say(_text);
+        }
+    }
 
     //Importar DLL
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_WEBGL)
