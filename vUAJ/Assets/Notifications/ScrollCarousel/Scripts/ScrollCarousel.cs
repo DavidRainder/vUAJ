@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.ComponentModel;
+using UnityEngine.Video;
 
 namespace ScrollCarousel
 {
@@ -25,10 +26,7 @@ namespace ScrollCarousel
         public float CenteredScale = 1f;
         [Description("Scale of the non-centered items")]
         public float NonCenteredScale = 0.7f;
-        [Header("Rotation")]
-        [Description("Maximum rotation angle of the items")]
-        [SerializeField] public float MaxRotationAngle = 10f;
-        [SerializeField] private float _rotationSmoothSpeed = 5f;
+   
 
         [Header("Swipe Settings")]
         [SerializeField] private float _snapSpeed = 10f;
@@ -50,6 +48,7 @@ namespace ScrollCarousel
         private Vector2 _startDragPosition;
         private bool _isSnapping = false;
         private float _currentRotationOffset = 0f;
+        
         private Dictionary<RectTransform, Coroutine> _activeColorAnimations = new Dictionary<RectTransform, Coroutine>();
 
         private void Awake()
@@ -61,6 +60,7 @@ namespace ScrollCarousel
         {
             FocusItem(StartItem);
             ForceUpdate();
+            ResetAllVideos();
         }
 
         private void Update()
@@ -183,17 +183,7 @@ namespace ScrollCarousel
                     Items[i].localScale = newScale;
                 }
 
-                // Rotation
-                float rotationSign = (Items[i].anchoredPosition.x > centerPoint.x) ? 1f : -1f;
-                float targetRotationY = MaxRotationAngle * normalizedDistance * rotationSign;
-                if (!float.IsNaN(targetRotationY))
-                {
-                    Items[i].localRotation = Quaternion.Slerp(
-                        Items[i].localRotation,
-                        Quaternion.Euler(30, targetRotationY, 0),
-                        Time.deltaTime * _rotationSmoothSpeed
-                    );
-                }
+              
             }
 
             if (ColorAnimation)
@@ -303,13 +293,14 @@ namespace ScrollCarousel
 
             _currentRotationOffset = 0f;
             _startDragPosition = Vector2.zero;
+
+            
         }
 
         private void MoveToItem()
         {
             PositionItems(true);
             
-            // Check if we're close enough to stop snapping
             RectTransform targetItem = Items[_currentItemIndex];
             if (Mathf.Abs(targetItem.anchoredPosition.x - _rectTransform.rect.center.x) < 0.1f)
             {
@@ -330,14 +321,14 @@ namespace ScrollCarousel
             _currentItemIndex = index;
             _currentRotationOffset = 0f;
             _isSnapping = true;
-            
             for (int i = 0; i < Items.Count; i++)
             {
                 var item = Items[i];
                 bool isFocused = i == _currentItemIndex;
-                
-                item.GetComponent<CarouselButton>()?.SetFocus(isFocused);
+
+                item.GetComponent<CarouselItemController>()?.SetFocus(isFocused);
             }
+           
         }
 
         public void GoToNext()
@@ -372,36 +363,62 @@ namespace ScrollCarousel
 
         private void StartColorAnimation(RectTransform item, Color targetColor)
         {
-            if (_activeColorAnimations.ContainsKey(item))
+            if (_activeColorAnimations.TryGetValue(item, out var routine) && routine != null)
             {
-                StopCoroutine(_activeColorAnimations[item]);
-                _activeColorAnimations.Remove(item);
+                StopCoroutine(routine);
             }
             _activeColorAnimations[item] = StartCoroutine(ColorAnimationCoroutine(item, targetColor));
         }
 
         private IEnumerator ColorAnimationCoroutine(RectTransform item, Color targetColor)
         {
-            Image image = item.GetComponent<Image>();
-            if (image == null) 
+            var graphic = item.GetComponentInChildren<Graphic>(); // Busca Image o RawImage
+
+            if (graphic == null)
             {
                 _activeColorAnimations.Remove(item);
                 yield break;
             }
 
-            Color startColor = image.color;
+            Color startColor = graphic.color;
             float elapsedTime = 0f;
             float duration = 0.2f;
 
             while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
-                image.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
+                graphic.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
                 yield return null;
             }
 
-            image.color = targetColor;
+            graphic.color = targetColor;
             _activeColorAnimations.Remove(item);
         }
+
+        public void ResetAllVideos()
+        {
+            foreach (var item in Items)
+            {
+                var ctrl = item.GetComponent<CarouselItemController>();
+                if (ctrl != null && ctrl.videoPlayer != null)
+                {
+                    ctrl.videoPlayer.Pause();
+                    ctrl.videoPlayer.time = 0;
+                }
+            }
+
+            // Refresca el foco para que el correcto se reproduzca
+            for (int i = 0; i < Items.Count; i++)
+            {
+                bool isFocused = (i == _currentItemIndex);
+                Items[i].GetComponent<CarouselItemController>()?.SetFocus(isFocused);
+            }
+        }
+
+        public void SetIndex(int index)
+        {
+
+        }
+
     }
 }

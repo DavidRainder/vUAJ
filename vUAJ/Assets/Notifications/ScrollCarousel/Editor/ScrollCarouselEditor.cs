@@ -135,13 +135,6 @@ namespace ScrollCarousel
                     carousel.Items[i].localScale = newScale;
                 }
 
-                // Rotation
-                float rotationSign = (carousel.Items[i].anchoredPosition.x > centerPoint.x) ? 1f : -1f;
-                float targetRotationY = carousel.MaxRotationAngle * normalizedDistance * rotationSign;
-                if (!float.IsNaN(targetRotationY))
-                {
-                    carousel.Items[i].localRotation = Quaternion.Euler(30, targetRotationY, 0);
-                }
             }
 
             EditorUtility.SetDirty(carousel);
