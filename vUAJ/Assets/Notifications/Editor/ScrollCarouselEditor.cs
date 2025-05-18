@@ -37,8 +37,6 @@ namespace ScrollCarousel
             EditorGUILayout.PropertyField(serializedObject.FindProperty("Itemspacing"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("CenteredScale"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("NonCenteredScale"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxRotationAngle"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_rotationSmoothSpeed"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_snapSpeed"));
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("InfiniteScroll"));

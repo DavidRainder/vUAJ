@@ -254,4 +254,17 @@ public class MagnifyingGlassController : MonoBehaviour
     {
         _movement = Vector2.zero;
     }
+    /// <summary>
+    /// Permite reasignar dinámicamente las acciones de input.
+    /// </summary>
+    public void SetActionReference(string actionName, InputActionReference newReference)
+    {
+        switch (actionName)
+        {
+            case "Activation": _activationAction = newReference; break;
+            case "Expand": _expandAction = newReference; break;
+            case "Reduce": _reduceAction = newReference; break;
+            case "Move": _movementAction = newReference; break;
+        }
+    }
 }
