@@ -14,4 +14,8 @@ public class SceneButton : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void goToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
