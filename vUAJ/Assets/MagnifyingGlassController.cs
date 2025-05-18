@@ -27,7 +27,8 @@ public class MagnifyingGlassController : MonoBehaviour
     [SerializeField,
      Tooltip("Acción con la que se reducirá el tamaño de la Lupa.\n" +
         "Por defecto: E." +
-        "Este evento funciona subscribiendose a su performed para reducir la lupa y a su canceled para dejar de reducirla")] 
+        "Este evento funciona subscribiendose a su performed para reducir la lupa y a su canceled para dejar de reducirla." +
+        "AVISO: El tamaño MÍNIMO de la cámara es su ortagraphicSize inicial!!")] 
     InputActionReference _reduceAction;
     
     [SerializeField, 
@@ -68,6 +69,11 @@ public class MagnifyingGlassController : MonoBehaviour
     float _currentExpandFactor = 0.0f;
 
     /// <summary>
+    /// Tamaño mínimo de la cámara. Se settea al inicial
+    /// </summary>
+    float _initialSize = 5.0f;
+
+    /// <summary>
     /// Componente auxiliar que nos da el tamaño de la cámara
     /// padre que hace que no pueda salir de los bordes de esta.
     /// 
@@ -96,6 +102,7 @@ public class MagnifyingGlassController : MonoBehaviour
         }
         // Ponemos la cámara a ortográfica, que es lo que necesitamos
         _camera.orthographic = true;
+        _initialSize = _camera.orthographicSize;
 
         // Activamos la cámara según nuestra flag de activación (por defecto, falsa)
         EnablaCamera(_isActive);
@@ -131,7 +138,7 @@ public class MagnifyingGlassController : MonoBehaviour
         }
 
         // Expandimos/Reducimos el tamaño de la lupa
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize + _currentExpandFactor * Time.deltaTime, 0.1f, int.MaxValue);
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize + _currentExpandFactor * Time.deltaTime, 0.1f, _initialSize);
     }
 
     /// <summary>
