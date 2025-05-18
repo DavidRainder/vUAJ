@@ -3313,7 +3313,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4643702464217221009}
         m_TargetAssemblyTypeName: HUDCustom, Assembly-CSharp
-        m_MethodName: saveConfig
+        m_MethodName: saveCustom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3983,19 +3983,7 @@ MonoBehaviour:
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4643702464217221009}
-        m_TargetAssemblyTypeName: HUDCustom, Assembly-CSharp
-        m_MethodName: sliderScale
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7158024540494557865
 GameObject:
   m_ObjectHideFlags: 0
@@ -4159,7 +4147,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7324993752352767169}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 0.00925926, y: 0.00925926, z: 0.00925926}
   m_ConstrainProportionsScale: 0
@@ -4222,7 +4210,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6228212869039902589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4253,7 +4241,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 6925382126073764242}
-  defaultPrefab: {fileID: 1311845239398827970, guid: 594d3d4e586d9e44382156bc6b45734d, type: 3}
   presetDropdown: {fileID: 586561400363984938}
   resetCustomButton: {fileID: 6022695313587871635}
   shadowSlider: {fileID: 2319174625787340963}
