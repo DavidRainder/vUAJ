@@ -593,7 +593,6 @@ MonoBehaviour:
   iconImage: {fileID: 8423152371355672350}
   backgroundImage: {fileID: 1397837010117216599}
   borderImage: {fileID: 6001086428775161330}
-  blackPreferences: {fileID: 2192022737344547345}
   blurPreferences: {fileID: 2192022737344547345}
   glowPreferences: {fileID: 7193594688957759223}
   messageText: {fileID: 4024223340777150481}
@@ -821,6 +820,7 @@ GameObject:
   - component: {fileID: 7273085012152799316}
   - component: {fileID: 6714728425047257523}
   - component: {fileID: 4024223340777150481}
+  - component: {fileID: 698977607276754139}
   m_Layer: 5
   m_Name: 'Text '
   m_TagString: Untagged
@@ -946,6 +946,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &698977607276754139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6270729701882043232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc56a9776ff561488a836459e1dca9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7193594688957759223
 GameObject:
   m_ObjectHideFlags: 0

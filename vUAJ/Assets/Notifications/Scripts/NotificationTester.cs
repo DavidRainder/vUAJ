@@ -36,7 +36,7 @@ public class NotificationTester : MonoBehaviour
             NotificationSize.Medium,        // tamaño
             NotificationDuration.Unlimited,  // duración
             HapticFeedbackType.Heavy,        // haptic feedback
-            NotificationStyle.Black
+            NotificationStyle.Glow
         );
     }
 }

@@ -42,6 +42,7 @@ public class VolumePerceptionManager : MonoBehaviour
     public void setShowColliders(System.Boolean show)
     {
         showColliders = show;
-        changeShowColliders(showColliders);
+        if(changeShowColliders != null)
+            changeShowColliders(showColliders);
     }
 }
