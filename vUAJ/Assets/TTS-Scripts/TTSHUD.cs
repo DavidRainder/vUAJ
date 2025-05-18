@@ -1,52 +1,21 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-//Añadir esta clase a un objeto en escena
-//Lee el texto de los elementos de la UI que lo tengan
-public class TTSHUD : MonoBehaviour
+public class TTSHUD : MonoBehaviour, IPointerClickHandler
 {
-    TextMeshPro text;
-
     [SerializeField]
-    int mouseButton = 0;
-
+    TMP_Text UIText= null;
     [SerializeField]
-    LayerMask mask;
+    string fieldText = null;
 
-    [SerializeField]
-    float cooldownTime = 2f;
-    float elapsedTime = 2f;
-
-    private void Awake()
+    public void OnPointerClick(PointerEventData eventData)
     {
-       mask = LayerMask.GetMask("UI");
-    }
-
-    public void ReadHUD()
-    {
-        TTSManager.m_Instance.StartSpeech(text.text);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(mouseButton))
-        {
-            Debug.Log("mouse pressed");
-            RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector3.forward, Mathf.Infinity, mask);
-            
-            //Collider2D hit = Physics2D.OverlapPoint(Input.mousePosition, mask); //--> sigue dando hit = Null
-            Debug.Log(hit.collider);
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<TextMeshProUGUI>() != null) {
-
-                text.text = hit.collider.GetComponent<TextMeshProUGUI>().text;
-                if(text.text != "" || text.text != null) ReadHUD();
-                Debug.Log(text.text);
-            }
-
-        }
+        if (UIText != null)
+            TTSManager.m_Instance.StartSpeech(UIText.text);
+        else if (fieldText != null)
+            TTSManager.m_Instance.StartSpeech(fieldText);
+        else Debug.LogWarning("The UI element does not have Text associated so the script doesnt have an effect");
     }
 }

@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 463565934}
   - component: {fileID: 463565936}
   - component: {fileID: 463565935}
-  - component: {fileID: 463565937}
+  - component: {fileID: 463565938}
   m_Layer: 5
   m_Name: TestHUDInteractable
   m_TagString: Untagged
@@ -196,52 +196,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463565933}
   m_CullTransparentMesh: 1
---- !u!61 &463565937
-BoxCollider2D:
+--- !u!114 &463565938
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463565933}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4632459869a7f469b118a408d4b351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIText: {fileID: 0}
+  fieldText: hola soy un coquito
 --- !u!1 &969723634
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,7 +871,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Municion
 
-    12/12 balas'
+    12 / 12 balas'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34bfff5caddc23742b7d071615fd99da, type: 2}
   m_sharedMaterial: {fileID: -4081018348526899570, guid: 34bfff5caddc23742b7d071615fd99da, type: 2}
@@ -1129,7 +1097,7 @@ GameObject:
   - component: {fileID: 2058041595}
   - component: {fileID: 2058041598}
   - component: {fileID: 2058041597}
-  - component: {fileID: 2058041596}
+  - component: {fileID: 2058041599}
   m_Layer: 5
   m_Name: TestHUDInteractable_1
   m_TagString: Untagged
@@ -1157,52 +1125,6 @@ RectTransform:
   m_AnchoredPosition: {x: -41.697, y: -17}
   m_SizeDelta: {x: 83.3938, y: 84.5009}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!61 &2058041596
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058041594}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &2058041597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,6 +1163,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058041594}
   m_CullTransparentMesh: 1
+--- !u!114 &2058041599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058041594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4632459869a7f469b118a408d4b351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIText: {fileID: 1330641412}
+  fieldText: 
 --- !u!1 &2070175809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1189,6 @@ GameObject:
   - component: {fileID: 2070175810}
   - component: {fileID: 2070175812}
   - component: {fileID: 2070175813}
-  - component: {fileID: 2070175814}
   m_Layer: 0
   m_Name: TTS
   m_TagString: Untagged
@@ -1358,23 +1293,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key_repeat: 114
   nameFile: subs.json
---- !u!114 &2070175814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2070175809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5f7f3cb061ff224cb3e8b5df2b18316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseButton: 0
-  mask:
-    serializedVersion: 2
-    m_Bits: 32
-  cooldownTime: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
