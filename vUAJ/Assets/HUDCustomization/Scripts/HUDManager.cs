@@ -47,6 +47,8 @@ public class HUDManager : MonoBehaviour
         scaleFactor = 100.0f;
         shadowFactor = 0.0f;
         currentSelection = HUDTypes.defaultHUD;
+
+        DontDestroyOnLoad(this.gameObject);
     }
     void Start()
     {
