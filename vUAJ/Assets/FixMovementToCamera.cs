@@ -1,31 +1,59 @@
 using UnityEngine;
 
-[Tooltip("Component used to fix a child of the camera to its bounds in position." +
-    "This is only meant to be used for a 2D Ortographic camera.")]
+[Tooltip("Utilizado para fijar el movimiento de un objeto a, como máximo, los bordes de una cámara ortográfica 2D.")]
 public class FixMovementToCamera : MonoBehaviour
 {
-    [SerializeField, Tooltip("The camera to fix to.")] Camera _mainCamera = null;
+    [SerializeField, 
+     Tooltip("La cámara de la que cogeremos el tamaño.")] 
+    Camera _mainCamera = null;
 
+    // ancho y alto de la cámara
     float _width;
     float _height;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    /// <summary>
+    /// Variable privada que nos dice si se están utilizando las bounds en otro script
+    /// y no queremos por lo tanto que se ejecute el Update de este componente
+    /// </summary>
+    bool _usedByOthers = false;
+
+    /// <summary>
+    /// Variable privada que nos dice si se están utilizando las bounds en otro script
+    /// y no queremos por lo tanto que se ejecute el Update de este componente
+    /// </summary>
+    public bool UsedByOthers { 
+        get { return _usedByOthers; } 
+        set {
+            _usedByOthers = value;
+            // Descativamos el script si si está usando por otros para evitar ejecutar cosas
+            // innecesarias
+            this.enabled = !_usedByOthers;
+        } }
+
+    // calculamos el ancho y alto de la cámara
     void Start()
     {
+        // el alto es su ortographic size
         _height = _mainCamera.orthographicSize;
+        // el ancho es una operación realizada con su aspect ratio
         _width = _mainCamera.aspect * _height;
         
+        // si el usuario no pone cámara, se asume la MainCamera
         if(_mainCamera == null)
         {
             _mainCamera = Camera.main;
         }
     }
 
+    /// <summary>
+    /// Método que devuelve el ancho y alto de la cámara en un vector2
+    /// </summary>
+    /// <returns> Ancho (x) y alto (y) de cámara </returns>
     public Vector2 GetFittings() {
         return new Vector2(_width, _height);
     }
 
-    // Update is called once per frame
+    // Clampeo de la posición a los límites dados
     void Update()
     {
         Vector3 position;

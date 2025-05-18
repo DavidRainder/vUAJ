@@ -417,6 +417,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera&MagnifyingGlass
       objectReference: {fileID: 0}
+    - target: {fileID: 505124909855207709, guid: fa557f6f50abd8048a5dd5e3843f8704, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1557818994551567445, guid: fa557f6f50abd8048a5dd5e3843f8704, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3892159117553321371, guid: fa557f6f50abd8048a5dd5e3843f8704, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
