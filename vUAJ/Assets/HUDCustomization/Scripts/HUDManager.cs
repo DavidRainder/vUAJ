@@ -47,12 +47,12 @@ public class HUDManager : MonoBehaviour
         scaleFactor = 100.0f;
         shadowFactor = 0.0f;
         currentSelection = HUDTypes.defaultHUD;
+        enableShadows(); 
 
         DontDestroyOnLoad(this.gameObject);
     }
     void Start()
     {
-       
     }
 
     // Update is called once per frame
@@ -67,6 +67,22 @@ public class HUDManager : MonoBehaviour
     public GameObject getDefaultPrefab()
     {
         return HUDprefab;
+    }
+    public void enableShadows() // Add default shadows
+    {
+        foreach (Transform tr in HUDprefab.transform)
+        {
+            UnityEngine.UI.DropShadow shadow = tr.gameObject.GetComponent<UnityEngine.UI.DropShadow>();
+            if (shadow == null)
+            {
+                shadow = tr.gameObject.AddComponent<UnityEngine.UI.DropShadow>();
+
+                shadow.ShadowSpread = new Vector2(0.0f, 0.0f);
+                shadow.effectColor = Color.black;
+                shadow.EffectDistance = new Vector2(0f, 0f);
+                shadow.iterations = 50;
+            }
+        }
     }
     public void saveConfig(HUDTypes type, Dictionary<string, HUDManager.ObjectInfo> objInfo = null, GameObject currHUD = null)
     {
@@ -116,9 +132,12 @@ public class HUDManager : MonoBehaviour
                     RectTransform rect = tr.GetComponent<RectTransform>();
                     rect.anchoredPosition3D = data.pos;
                     rect.localScale = data.baseScale * data.scaleFactor;
-                    UnityEngine.UI.DropShadow shadow = tr.gameObject.AddComponent<UnityEngine.UI.DropShadow>();
-                    shadow.effectColor = Color.black;
-                    shadow.ShadowSpread = new Vector2(data.shadowFactor * 1.5f, data.shadowFactor * 1.5f);
+                    UnityEngine.UI.DropShadow shadow = tr.gameObject.GetComponent<UnityEngine.UI.DropShadow>();
+                    if(shadow != null)
+                    {
+                        shadow.effectColor = Color.black;
+                        shadow.ShadowSpread = new Vector2(data.shadowFactor * 1.5f, data.shadowFactor * 1.5f);
+                    }
                     if (type == HUDTypes.customHUD)
                     {
                         HUDInfo[tr.gameObject.name] = data; //shadow spread entre 1.5?
