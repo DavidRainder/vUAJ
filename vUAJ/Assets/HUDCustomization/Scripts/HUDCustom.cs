@@ -46,7 +46,7 @@ public class HUDCustom : MonoBehaviour
         public float scaleFactor;
         public float shadowFactor;
         public Vector3 pos;
-        public ObjectInfo(Vector3 scale, float scaleF, float shadow, Vector3 position )
+        public ObjectInfo(Vector3 scale, float scaleF, float shadow, Vector3 position)
         {
             baseScale = scale;
             scaleFactor = scaleF;
@@ -104,7 +104,7 @@ public class HUDCustom : MonoBehaviour
                 Transform tr = customHUD.transform.GetChild(i);
                 ObjectInfo aux = HUDInfo[tr.gameObject.name]; 
                 aux.scaleFactor = scaleSlider.value / 100;
-                aux.shadowFactor = shadowSlider.value / 100;
+                aux.shadowFactor = shadowSlider.value;
                 aux.pos = tr.GetComponent<RectTransform>().anchoredPosition3D;  
                 HUDInfo[tr.gameObject.name] = aux;
                 string info = JsonUtility.ToJson(aux);
@@ -121,7 +121,7 @@ public class HUDCustom : MonoBehaviour
             System.IO.File.WriteAllText(Application.persistentDataPath + "/customHUD.json",totalInfo+ " \n}");
 
         //prueba de lectura json 
-        //GameObject aux2 = Instantiate(defaultPrefab, panel.transform); 
+        //GameObject aux2 = Instantiate(defaultPrefab, panel.transform);
         //customHUD.SetActive(false); defaultHUD.SetActive(false);
         //applyCustomToHUDPrefab(ref aux2);
     }
