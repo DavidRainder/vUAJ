@@ -16,8 +16,17 @@ public class JSONParser : MonoBehaviour
     }
 
     public static List<string> FromJson(string file) {
-        string json = System.IO.File.ReadAllText(Application.persistentDataPath + "/" + file);
-        if (json == null) return null;
+        string json = "";
+        try
+        {
+            json = System.IO.File.ReadAllText(Application.persistentDataPath + "/" + file);
+
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("TTSSubtitles has been added but no JSON was found.");
+            return null;
+        }
         StringList l = JsonUtility.FromJson<StringList>(json);
         return l.Subtitles;
     
