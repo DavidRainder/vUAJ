@@ -5,7 +5,7 @@ public class SettingFunctions : MonoBehaviour
 {
     public void setTTSMode()
     {
-        TTSManager.m_Instance.TTSActivation();
+        TTSManager.Instance.TTSActivation();
     }
 
     public void setShowColliders(System.Boolean show)

@@ -16,7 +16,7 @@ public class TTSNotifications : MonoBehaviour
     //Dice la notificacion y guarda la ultima notificacion dicha por si se quiere repetir
     public void SayNotification(string text)
     {
-        TTSManager.m_Instance.StartSpeech(text);
+        TTSManager.Instance.StartSpeech(text);
         lastNotif = text;
     }
 

@@ -13,9 +13,9 @@ public class TTSHUD : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (UIText != null)
-            TTSManager.m_Instance.StartSpeech(UIText.text);
+            TTSManager.Instance.StartSpeech(UIText.text);
         else if (fieldText != null)
-            TTSManager.m_Instance.StartSpeech(fieldText);
+            TTSManager.Instance.StartSpeech(fieldText);
         else Debug.LogWarning("The UI element does not have Text associated so the script doesnt have an effect");
     }
 }

@@ -31,8 +31,6 @@ public struct NotificationData
 }
 public class NotificationManager : MonoBehaviour
 {
-    public static NotificationManager Instance { get; private set; }
-
     public NotificationPosition CurrentPosition = NotificationPosition.TopLeft;
     public NotificationSize CurrentSize = NotificationSize.Medium;
     public NotificationDuration CurrentDuration = NotificationDuration.Seconds5;
@@ -48,27 +46,37 @@ public class NotificationManager : MonoBehaviour
     public UnityEngine.UI.Image transparencyOverlay;
 
     private Queue<NotificationData> notificationQueue = new Queue<NotificationData>();
-    private bool isProcessing = false; 
+    private bool isProcessing = false;
 
+
+    #region Singleton
+    private static NotificationManager _instance = null;
+
+    public static NotificationManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Accesibility Manager not present in scene");
+            }
+            return _instance;
+        }
+    }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
         {
             Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
         }
     }
+    #endregion
 
     public void SetPosition(NotificationPosition newPosition) => CurrentPosition = CurrentPosition == newPosition ? CurrentPosition : newPosition;
     public void SetSize(NotificationSize newSize) => CurrentSize = CurrentSize == newSize ? CurrentSize :  newSize;

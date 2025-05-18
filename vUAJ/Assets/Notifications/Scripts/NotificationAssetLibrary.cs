@@ -3,23 +3,41 @@ using System.Collections.Generic;
 
 public class NotificationAssetLibrary : MonoBehaviour
 {
-    public static NotificationAssetLibrary Instance { get; private set; }
 
     private Dictionary<string, Sprite> iconDict = new Dictionary<string, Sprite>();
     private Dictionary<string, AudioClip> soundDict = new Dictionary<string, AudioClip>();
 
+    #region Singleton
+    private static NotificationAssetLibrary _instance = null;
 
-    void Awake()
+    public static NotificationAssetLibrary Instance
     {
-        if (Instance != null && Instance != this)
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Accesibility Manager not present in scene");
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadAssets();
+        }
+        else
         {
             Destroy(gameObject);
-            return;
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        LoadAssets();
     }
+    #endregion
+
+
 
     private void LoadAssets()
     {

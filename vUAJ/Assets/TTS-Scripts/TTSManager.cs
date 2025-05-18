@@ -13,15 +13,35 @@ public class TTSManager : MonoBehaviour
     [SerializeField]
     bool TTSactive = false;
 
-    //Instancia de TTS Manager
-    public static TTSManager m_Instance;
 
-    private void OnEnable()
+    #region Singleton
+    private static TTSManager _instance = null;
+
+    public static TTSManager Instance
     {
-        if (m_Instance == null) { m_Instance = this; }
-        else Destroy(this);
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Accesibility Manager not present in scene");
+            }
+            return _instance;
+        }
     }
 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
 
     //Funcion que se encarga de que se diga el texto que se le pase
     public void StartSpeech(string _text)

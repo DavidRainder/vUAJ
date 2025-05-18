@@ -92,7 +92,16 @@ namespace Platformer
                 deathState = false;
             }
         }
-
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.tag == "Sign")
+            {
+                for (int i = 0; i < collision.gameObject.transform.childCount; i++)
+                {
+                    collision.gameObject.transform.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+        }
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.tag == "Coin")
@@ -101,16 +110,16 @@ namespace Platformer
                 switch (gameManager.coinsCounter)
                 {
                     case 1:
-                    {
-                        notificationManager.SpawnNotification(
-                            "¡Has conseguido 1 moneda! Solo te quedan 2, ¡ánimo!",
-                            "coin2",
-                            new Color(113f / 255f, 194f / 255f, 79f / 255f),
-                            "Coin Bag Reward",                           // sin sonido
-                            HapticFeedbackType.Heavy       // haptic feedback
-                        );
-                        break;
-                    }
+                        {
+                            notificationManager.SpawnNotification(
+                                "¡Has conseguido 1 moneda! Solo te quedan 2, ¡ánimo!",
+                                "coin2",
+                                new Color(113f / 255f, 194f / 255f, 79f / 255f),
+                                "Coin Bag Reward",                           // sin sonido
+                                HapticFeedbackType.Heavy       // haptic feedback
+                            );
+                            break;
+                        }
                     case 2:
                         {
                             notificationManager.SpawnNotification(
@@ -135,6 +144,13 @@ namespace Platformer
                         }
                 }
                 Destroy(other.gameObject);
+            }
+            else if (other.gameObject.tag == "Sign")
+            {
+                for(int i = 0; i < other.gameObject.transform.childCount; i++)
+                {
+                    other.gameObject.transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
         }
     }

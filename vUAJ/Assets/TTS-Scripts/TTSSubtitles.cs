@@ -30,9 +30,9 @@ public class TTSSubtitles : MonoBehaviour
     //Este metodo lee los subtitulos linea a linea
     public void ReadNextSubtitle()
     {
-        if (TTSManager.m_Instance.GetTTSactive())
+        if (TTSManager.Instance.GetTTSactive())
         {
-            TTSManager.m_Instance.StartSpeech(subtitles[_nextSubtitle]);
+            TTSManager.Instance.StartSpeech(subtitles[_nextSubtitle]);
             if (_nextSubtitle + 1 < subtitles.Count)
                 _nextSubtitle++;
 
