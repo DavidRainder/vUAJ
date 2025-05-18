@@ -17,6 +17,7 @@ public class JSONParser : MonoBehaviour
 
     public static List<string> FromJson(string file) {
         string json = System.IO.File.ReadAllText(Application.persistentDataPath + "/" + file);
+        if (json == null) return null;
         StringList l = JsonUtility.FromJson<StringList>(json);
         return l.Subtitles;
     

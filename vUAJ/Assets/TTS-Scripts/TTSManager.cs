@@ -22,6 +22,7 @@ public class TTSManager : MonoBehaviour
         else Destroy(this);
     }
 
+
     //Funcion que se encarga de que se diga el texto que se le pase
     public void StartSpeech(string _text)
     {
@@ -41,6 +42,7 @@ public class TTSManager : MonoBehaviour
     [DllImport(_dll)] static extern void ttsrust_say(string text);
 
     //Funcion que activa o desactiva las funciones de TTS desde un menu de ajustes general
+    public bool GetTTSactive() { return TTSactive; }
     public void TTSActivation()
     {
         TTSactive = !TTSactive;

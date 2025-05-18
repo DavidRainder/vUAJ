@@ -13,7 +13,8 @@ public class TTSSubtitles : MonoBehaviour
     [SerializeField]
     string nameFile; //Debe de guardarse en Application.persistentDataPath
 
-    List<string> subtitles = new List<string>();
+
+    List<string> subtitles;
 
     int _nextSubtitle = 0;
 
@@ -22,15 +23,20 @@ public class TTSSubtitles : MonoBehaviour
     void Start()
     {
         subtitles = JSONParser.FromJson(nameFile);
+        if(subtitles == null ) { subtitles = new List<string>(); }
         subtitles.Add(""); //Añade una cadena vacia al final para que no se repita la ultima linea de texto siempre
     }
 
     //Este metodo lee los subtitulos linea a linea
     public void ReadNextSubtitle()
     {
-        TTSManager.m_Instance.StartSpeech(subtitles[_nextSubtitle]);
-        if(_nextSubtitle+1 < subtitles.Count)
-            _nextSubtitle++;
+        if (TTSManager.m_Instance.GetTTSactive())
+        {
+            TTSManager.m_Instance.StartSpeech(subtitles[_nextSubtitle]);
+            if (_nextSubtitle + 1 < subtitles.Count)
+                _nextSubtitle++;
+
+        }
     }
 
     //Cambia el file de los subtitulos durante ejecucion (por ejemplo para hablar con otro NPC, etc)
