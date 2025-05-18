@@ -58,7 +58,7 @@ public class MagnifyingGlassController : MonoBehaviour
         {
             transform.Translate(_movement * _movementSpeed * Time.deltaTime);
         }
-        _camera.orthographicSize += _currentExpandFactor * Time.deltaTime;
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize + _currentExpandFactor * Time.deltaTime, 0.1f, int.MaxValue);
     }
 
     void EnablaCamera(bool enable)
