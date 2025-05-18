@@ -153,6 +153,9 @@ public class HUDCustom : MonoBehaviour
         {
             initSliders(); // Set sliders a valor correspondiente
         }
+        // Listeners
+        scaleSlider.onValueChanged.AddListener(sliderScale);
+        shadowSlider.onValueChanged.AddListener(sliderShadow);
     }
     public void resetCustom()
     {
@@ -164,10 +167,6 @@ public class HUDCustom : MonoBehaviour
         shadowSlider.value = HUDManager.Instance.shadowFactor; 
         scaleSlider.value = HUDManager.Instance.scaleFactor * 100;
         shadowNumber.text = (int)shadowSlider.value + "%"; scaleNumber.text = (int)scaleSlider.value + "%";
-
-        // Listeners
-        scaleSlider.onValueChanged.AddListener(sliderScale);
-        shadowSlider.onValueChanged.AddListener(sliderShadow);
     }
 
     // Update is called once per frame
