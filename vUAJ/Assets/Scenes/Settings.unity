@@ -2328,6 +2328,7 @@ GameObject:
   - component: {fileID: 338512739}
   - component: {fileID: 338512738}
   - component: {fileID: 338512737}
+  - component: {fileID: 338512740}
   m_Layer: 5
   m_Name: x1.50
   m_TagString: Untagged
@@ -2399,8 +2400,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AccesibilityManager, Assembly-CSharp
+      - m_Target: {fileID: 338512740}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
         m_MethodName: onFontSizeChanged
         m_Mode: 4
         m_Arguments:
@@ -2449,6 +2450,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338512735}
   m_CullTransparentMesh: 1
+--- !u!114 &338512740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338512735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &391361849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,6 +3630,7 @@ GameObject:
   - component: {fileID: 532458556}
   - component: {fileID: 532458555}
   - component: {fileID: 532458554}
+  - component: {fileID: 532458557}
   m_Layer: 5
   m_Name: x1.25
   m_TagString: Untagged
@@ -3688,8 +3702,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AccesibilityManager, Assembly-CSharp
+      - m_Target: {fileID: 532458557}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
         m_MethodName: onFontSizeChanged
         m_Mode: 4
         m_Arguments:
@@ -3738,6 +3752,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532458552}
   m_CullTransparentMesh: 1
+--- !u!114 &532458557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532458552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &536546787
 GameObject:
   m_ObjectHideFlags: 0
@@ -6194,6 +6220,7 @@ GameObject:
   - component: {fileID: 791374664}
   - component: {fileID: 791374663}
   - component: {fileID: 791374662}
+  - component: {fileID: 791374665}
   m_Layer: 5
   m_Name: x1.75
   m_TagString: Untagged
@@ -6265,8 +6292,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AccesibilityManager, Assembly-CSharp
+      - m_Target: {fileID: 791374665}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
         m_MethodName: onFontSizeChanged
         m_Mode: 4
         m_Arguments:
@@ -6315,6 +6342,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791374660}
   m_CullTransparentMesh: 1
+--- !u!114 &791374665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791374660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &819416899
 GameObject:
   m_ObjectHideFlags: 0
@@ -7798,7 +7837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1005217954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8071,6 +8110,7 @@ GameObject:
   - component: {fileID: 1057481175}
   - component: {fileID: 1057481174}
   - component: {fileID: 1057481173}
+  - component: {fileID: 1057481176}
   m_Layer: 5
   m_Name: Default
   m_TagString: Untagged
@@ -8142,8 +8182,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AccesibilityManager, Assembly-CSharp
+      - m_Target: {fileID: 1057481176}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
         m_MethodName: onFontSizeChanged
         m_Mode: 4
         m_Arguments:
@@ -8192,6 +8232,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057481171}
   m_CullTransparentMesh: 1
+--- !u!114 &1057481176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057481171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1064428919
 GameObject:
   m_ObjectHideFlags: 0
@@ -10786,6 +10838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1525903221}
   - component: {fileID: 1525903222}
+  - component: {fileID: 1525903223}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -10861,8 +10914,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AccesibilityManager, Assembly-CSharp
+      - m_Target: {fileID: 1525903223}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
         m_MethodName: setDislexiaMode
         m_Mode: 0
         m_Arguments:
@@ -10874,6 +10927,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1525903223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525903220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1549665184
 GameObject:
   m_ObjectHideFlags: 0
@@ -13367,6 +13432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1881783458}
   - component: {fileID: 1881783459}
+  - component: {fileID: 1881783460}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -13442,10 +13508,10 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VolumePerceptionManager, Assembly-CSharp
+      - m_Target: {fileID: 1881783460}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
         m_MethodName: setShowColliders
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13455,6 +13521,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1881783460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881783457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1894974964
 GameObject:
   m_ObjectHideFlags: 0
@@ -13747,6 +13825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1957178967}
   - component: {fileID: 1957178968}
+  - component: {fileID: 1957178969}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -13822,9 +13901,9 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TTSManager, Assembly-CSharp
-        m_MethodName: TTSActivation
+      - m_Target: {fileID: 1957178969}
+        m_TargetAssemblyTypeName: SettingFunctions, Assembly-CSharp
+        m_MethodName: setTTSMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13835,6 +13914,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1957178969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957178966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2a33d3ab90bd9439a04561e376e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1978827728
 GameObject:
   m_ObjectHideFlags: 0

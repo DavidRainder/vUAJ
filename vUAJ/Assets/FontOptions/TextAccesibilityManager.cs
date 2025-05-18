@@ -41,14 +41,14 @@ public class TextAccesibilityManager : MonoBehaviour
     public float currentFontSize;
     public bool applyFonts = false;
 
-    public void setDislexiaMode(System.Boolean dislexiaMode)
+    public void setDislexiaMode(bool dislexiaMode)
     {
         applyFonts = dislexiaMode;
         if (!applyFonts) fontChange(null);
         else fontChange(currentFontAsset);
     }
 
-    public void onFontSizeChanged(System.Single value)
+    public void onFontSizeChanged(float value)
     {
         currentFontSize = value;
         fontSizeChange(value);
