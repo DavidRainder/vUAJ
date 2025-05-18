@@ -44,7 +44,7 @@ public class HUDManager : MonoBehaviour
         HUDInfo = new Dictionary<string, HUDManager.ObjectInfo>();
 
         // Default values for later customization
-        scaleFactor = 100.0f;
+        scaleFactor = 1.0f;
         shadowFactor = 0.0f;
         currentSelection = HUDTypes.defaultHUD;
         enableShadows(); 
