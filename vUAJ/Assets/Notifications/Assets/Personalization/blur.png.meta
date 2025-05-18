@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f47bca8d2a391b648be1253b3a0b2f0d
+guid: c606688474260fc42a852f0fbfc73449
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3366709516038518679
-    second: blur_0
+      213: -1910045589590942232
+    second: Notificaciones_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,20 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: blur_0
+      name: Notificaciones_2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 797376d9774f8be20800000000000000
-      internalID: 3366709516038518679
+      spriteID: 8ed51a7f7a72e75e0800000000000000
+      internalID: -1910045589590942232
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      blur_0: 3366709516038518679
+      Notificaciones_2_0: -1910045589590942232
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
