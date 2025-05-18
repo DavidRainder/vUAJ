@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - overView
+  - Enemy
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -11,8 +14,8 @@ TagManager:
   - DontRender
   - Water
   - UI
-  - 
-  - 
+  - ground
+  - wall
   - 
   - 
   - 
