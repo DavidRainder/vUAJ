@@ -20,12 +20,14 @@ namespace Platformer
 
         void Update()
         {
+            if (GameManager.Instance.GameIsPaused) return;
             _rigidbody.linearVelocity = new Vector2(moveSpeed, _rigidbody.linearVelocity.y);
         }
 
         void FixedUpdate()
         {
-            if(!triggerCollider.IsTouchingLayers(ground) || triggerCollider.IsTouchingLayers(wall))
+            if (GameManager.Instance.GameIsPaused) return;
+            if (!triggerCollider.IsTouchingLayers(ground) || triggerCollider.IsTouchingLayers(wall))
             {
                 Flip();
             }

@@ -186,7 +186,7 @@ public class HUDManager : MonoBehaviour
     /// <summary>
     /// Load HUD segun selección del player en Menú
     /// </summary>
-    void loadCurrentHUD()
+    public void loadCurrentHUD()
     {
         applySavedConfigToHUD(HUDprefab, currentSelection); // Default or custom
     }

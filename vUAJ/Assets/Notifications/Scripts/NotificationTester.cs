@@ -27,7 +27,7 @@ public class NotificationTester : MonoBehaviour
 
     private void LaunchTestNotification()
     {
-        manager.SpawnNotification(
+        NotificationManager.Instance.SpawnNotification(
             "Prueba de notificación",
             "armor",                        // icono que esté en tu biblioteca
             new Color(0.2588f, 0.3882f, 0.8039f, 1f),                  // color

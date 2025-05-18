@@ -141,10 +141,13 @@ public class MagnifyingGlassController : MonoBehaviour
     void EnablaCamera(bool enable)
     {
         // Activamos/Desactivamos la cámara y sus hijos para que la Lupa funcione como debe
-        _camera.enabled = enable;
-        foreach (GameObject child in _childToActivate)
+        if(_camera != null)
         {
-            child.SetActive(enable);
+            _camera.enabled = enable;
+            foreach (GameObject child in _childToActivate)
+            {
+                child.SetActive(enable);
+            }
         }
     }
 

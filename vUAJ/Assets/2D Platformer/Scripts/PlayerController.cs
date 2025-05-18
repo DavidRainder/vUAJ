@@ -20,9 +20,12 @@ namespace Platformer
         private Rigidbody2D rigidbody;
         private Animator animator;
         private GameManager gameManager;
+        private NotificationManager notificationManager;
+
 
         void Start()
         {
+            notificationManager = NotificationManager.Instance;
             rigidbody = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -30,11 +33,13 @@ namespace Platformer
 
         private void FixedUpdate()
         {
+            if (GameManager.Instance.GameIsPaused) return;
             CheckGround();
         }
 
         void Update()
         {
+            if (GameManager.Instance.GameIsPaused) return;
             if (Input.GetButton("Horizontal")) 
             {
                 moveInput = Input.GetAxis("Horizontal");
@@ -93,6 +98,42 @@ namespace Platformer
             if (other.gameObject.tag == "Coin")
             {
                 gameManager.coinsCounter += 1;
+                switch (gameManager.coinsCounter)
+                {
+                    case 1:
+                    {
+                        notificationManager.SpawnNotification(
+                            "¡Has conseguido 1 moneda! Solo te quedan 2, ¡ánimo!",
+                            "coin2",
+                            new Color(113f / 255f, 194f / 255f, 79f / 255f),
+                            "Coin Bag Reward",                           // sin sonido
+                            HapticFeedbackType.Heavy       // haptic feedback
+                        );
+                        break;
+                    }
+                    case 2:
+                        {
+                            notificationManager.SpawnNotification(
+                                "¡Otra! Solo te queda 1",
+                                "card-diamonds",
+                                new Color(105f / 255f, 161f / 255f, 211f / 255f),
+                                "Brightest Star 3",                           // sin sonido
+                                HapticFeedbackType.Heavy        // haptic feedback
+                            );
+                            break;
+                        }
+                    case 3:
+                        {
+                            notificationManager.SpawnNotification(
+                                "¡Las conseguiste todas! YIPIIII",
+                                "badge",
+                                new Color(223f / 255f, 96f / 255f, 208f / 255f),
+                                "Discovery 1",                           // sin sonido
+                                HapticFeedbackType.Heavy        // haptic feedback
+                            );
+                            break;
+                        }
+                }
                 Destroy(other.gameObject);
             }
         }

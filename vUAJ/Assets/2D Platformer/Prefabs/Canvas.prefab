@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1764307776683422783}
   - component: {fileID: 464993468395033914}
   - component: {fileID: 8264193788942425938}
+  - component: {fileID: -4329808609692876025}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -75,6 +76,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-4329808609692876025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307583732916739947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72eca852b1eb75c4ab2a41a9c694158e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+  shadowDistance: {x: 0, y: 0}
+  m_UseGraphicAlpha: 1
+  iterations: 50
+  shadowSpread: {x: 0, y: 0}
 --- !u!1 &1381897178974883082
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +106,7 @@ GameObject:
   - component: {fileID: 71623853983468232}
   - component: {fileID: 6855535408017730817}
   - component: {fileID: 4092510426706043123}
+  - component: {fileID: -5021178521406068280}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -220,6 +239,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d515ebbdb16d894ab40cbb7624bccca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5021178521406068280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381897178974883082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72eca852b1eb75c4ab2a41a9c694158e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+  shadowDistance: {x: 0, y: 0}
+  m_UseGraphicAlpha: 1
+  iterations: 50
+  shadowSpread: {x: 0, y: 0}
 --- !u!1 &1506508267283088293
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +267,7 @@ GameObject:
   - component: {fileID: 1506508267283088294}
   - component: {fileID: 1506508267283088216}
   - component: {fileID: 1506508267283088295}
+  - component: {fileID: 8105559491472240560}
   m_Layer: 5
   m_Name: IconImage
   m_TagString: Untagged
@@ -254,7 +291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 39, y: -36.100006}
+  m_AnchoredPosition: {x: 39, y: -66.00003}
   m_SizeDelta: {x: 58, y: 59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1506508267283088216
@@ -295,6 +332,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8105559491472240560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506508267283088293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72eca852b1eb75c4ab2a41a9c694158e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+  shadowDistance: {x: 0, y: 0}
+  m_UseGraphicAlpha: 1
+  iterations: 50
+  shadowSpread: {x: 0, y: 0}
 --- !u!1 &1506508267755725143
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,6 +361,7 @@ GameObject:
   - component: {fileID: 1506508267755725130}
   - component: {fileID: 1506508267755725129}
   - component: {fileID: 1506508267755725128}
+  - component: {fileID: 21923805117660344}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -400,6 +455,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &21923805117660344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506508267755725143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d167b9ae7a943e54895cfaa5d7a5d9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
+  distanceFromCamera: 2
+  referenceResolution: {x: 1920, y: 1080}
 --- !u!1 &1506508268519164015
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +481,7 @@ GameObject:
   - component: {fileID: 1506508268519164000}
   - component: {fileID: 1506508268519164002}
   - component: {fileID: 1506508268519164001}
+  - component: {fileID: -6598983888075957403}
   m_Layer: 5
   m_Name: CoinText
   m_TagString: Untagged
@@ -434,7 +505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 87.8, y: -36.100006}
+  m_AnchoredPosition: {x: 87.8, y: -66}
   m_SizeDelta: {x: 36.15, y: 48.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1506508268519164002
@@ -481,3 +552,20 @@ MonoBehaviour:
   m_Text: '9
 
 '
+--- !u!114 &-6598983888075957403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506508268519164015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72eca852b1eb75c4ab2a41a9c694158e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColor: {r: 0, g: 0, b: 0, a: 1}
+  shadowDistance: {x: 0, y: 0}
+  m_UseGraphicAlpha: 1
+  iterations: 50
+  shadowSpread: {x: 0, y: 0}

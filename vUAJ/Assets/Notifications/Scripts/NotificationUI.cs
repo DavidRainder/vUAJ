@@ -1,15 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.InputSystem;
 public class NotificationUI : MonoBehaviour
 {
     public UnityEngine.UI.Image iconImage;
-    public UnityEngine.UI.Image backgroundImage;  
+    public UnityEngine.UI.Image backgroundImage;
     public UnityEngine.UI.Image borderImage;
 
     private UnityEngine.UI.Image blackOverlay;
-    public UnityEngine.UI.Image transparencyOverlay;
+    private UnityEngine.UI.Image transparencyOverlay;
+    private Coroutine fadeCoroutine;
     public GameObject glowPreferences;
     private Coroutine glowCoroutine;
 
@@ -26,12 +27,20 @@ public class NotificationUI : MonoBehaviour
     private NotificationPosition position;
     private float durationSeconds;
 
-    private void Start()
+    private NotificationManager manager;
+
+    //REFERENCIAR AL GAMEMANAGER PROPIO PARA PAUSAR NOTIFICACIONES
+    private Platformer.GameManager gameManager;  
+    private void Awake()
     {
-        if (NotificationManager.Instance != null)
+        //SI SE QUIERE QUE LAS NOTIFICACIONES (CUALQUIERA MENOS LA NORMAL) PAUSEN EL JUEGO, 
+        //ES NECESARIO QUE LA LOGICA DE JUEGO TENGA UN GAMEMANAGER
+        gameManager = Platformer.GameManager.Instance;
+        manager = NotificationManager.Instance;
+        if (manager != null)
         {
-            blackOverlay = NotificationManager.Instance.blackOverlay.GetComponent<UnityEngine.UI.Image>();
-            transparencyOverlay = NotificationManager.Instance.transparencyOverlay.GetComponent<UnityEngine.UI.Image>();
+            blackOverlay = manager.blackOverlay.GetComponent<UnityEngine.UI.Image>();
+            transparencyOverlay = manager.transparencyOverlay.GetComponent<UnityEngine.UI.Image>();
         }
     }
     public void SetUp(
@@ -86,18 +95,18 @@ public class NotificationUI : MonoBehaviour
             PlayHapticFeedback(hapticType);
         }
 
-        //Posición
+        //Posiciï¿½n
         this.position = position;
         rectTransform.anchorMin = rectTransform.anchorMax = GetAnchorFromPosition(position);
         rectTransform.pivot = GetPivotFromPosition(position);
 
-        //Tamaño
+        //Tamaï¿½o
         rectTransform.localScale = GetScaleFromSize(size);
 
         // Estilo visual 
         ApplyStyle(style);
 
-        //Duración
+        //Duraciï¿½n
         durationSeconds = GetDurationSeconds(duration);
 
         //Iniciar ciclo de vida
@@ -154,7 +163,7 @@ public class NotificationUI : MonoBehaviour
             _ => new Vector2(0.5f, 1)
         };
     }
-    private Color DarkenColor (Color baseColor, float factor)
+    private Color DarkenColor(Color baseColor, float factor)
     {
         return new Color(baseColor.r * factor, baseColor.g * factor, baseColor.b * factor, baseColor.a);
     }
@@ -171,12 +180,12 @@ public class NotificationUI : MonoBehaviour
         }
         else
         {
-            while (!Keyboard.current.escapeKey.isPressed) yield return null;
+            while (!Input.anyKeyDown) yield return null;
             yield return AnimateOut();
             Destroy(gameObject);
         }
     }
-   
+
     private IEnumerator AnimateIn()
     {
         Vector2 startPos = GetInitialOffset(position);
@@ -280,21 +289,23 @@ public class NotificationUI : MonoBehaviour
     private void ApplyStyle(NotificationStyle style)
     {
         ResetAllPreferences();
-
+        
         switch (style)
         {
             case NotificationStyle.Black:
-                if (NotificationManager.Instance != null && blackOverlay != null)
-                {
-                    StartCoroutine(FadeIn(blackOverlay, 0f, 1f, 0.3f));
-                }
+                    if (blackOverlay != null)
+                    {
+                        gameManager.GameIsPaused = true;
+                        StartCoroutine(FadeImage(blackOverlay, 0f, 1.0f, 0.3f));
+                    }
                 break;
 
             case NotificationStyle.Blur:
-                if (NotificationManager.Instance != null && transparencyOverlay != null)
-                {
-                    StartCoroutine(FadeIn(transparencyOverlay, 0f, transparencyOverlay.color.a, 0.3f));
-                }
+                    if (transparencyOverlay != null)
+                    {
+                        gameManager.GameIsPaused = true;
+                        StartCoroutine(FadeImage(transparencyOverlay, 0f, 0.5f, 0.3f));
+                    }
                 break;
 
             case NotificationStyle.Glow:
@@ -313,93 +324,50 @@ public class NotificationUI : MonoBehaviour
 
     private void ResetAllPreferences()
     {
-        // Realizamos el FadeOut de blackOverlay y blurPreferences
-        if (NotificationManager.Instance != null && blackOverlay != null)
-        {
-            StartCoroutine(FadeOut(blackOverlay, 1f, 0f, 0.3f));
-        }
+        gameManager.GameIsPaused = false;
+        if (blackOverlay != null)
+            blackOverlay.gameObject.SetActive(false);
 
-        if (NotificationManager.Instance != null && transparencyOverlay != null)
-        {
-            StartCoroutine(FadeOut(transparencyOverlay, transparencyOverlay.color.a, 0f, 0.3f));
-        }
+        if (transparencyOverlay != null)
+            transparencyOverlay.gameObject.SetActive(false);
 
-        // Desactivar glowPreferences
         if (glowPreferences != null)
-        {
             glowPreferences.SetActive(false);
-        }
 
         if (glowCoroutine != null)
-        {
             StopCoroutine(glowCoroutine);
-        }
     }
 
-    private IEnumerator FadeIn(UnityEngine.UI.Image image, float fromAlpha, float toAlpha, float duration)
+    private IEnumerator FadeImage(UnityEngine.UI.Image image, float fromAlpha, float toAlpha, float duration)
     {
-        // Asegurarse de que la imagen esté activada
-        if (image != null)
+        image.gameObject.SetActive(true);
+        Color c = image.color;
+        float elapsed = 0f;
+        while (elapsed < duration)
         {
-            image.gameObject.SetActive(true);
-        }
-
-        Color currentColor = image.color;
-        float startAlpha = fromAlpha;
-        float endAlpha = toAlpha;
-
-        // Establecer el color inicial
-        image.color = new Color(currentColor.r, currentColor.g, currentColor.b, startAlpha);
-
-        float t = 0f;
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            float alpha = Mathf.Lerp(startAlpha, endAlpha, t / duration);
-            image.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(fromAlpha, toAlpha, elapsed / duration);
+            image.color = new Color(c.r, c.g, c.b, alpha);
             yield return null;
         }
-        image.color = new Color(currentColor.r, currentColor.g, currentColor.b, endAlpha);
-    }
-
-    private IEnumerator FadeOut(UnityEngine.UI.Image image, float fromAlpha, float toAlpha, float duration)
-    {
-        Color currentColor = image.color;
-        float startAlpha = fromAlpha;
-        float endAlpha = toAlpha;
-
-        float t = 0f;
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            float alpha = Mathf.Lerp(startAlpha, endAlpha, t / duration);
-            image.color = new Color(currentColor.r, currentColor.g, currentColor.b, alpha);
-            yield return null;
-        }
-        image.color = new Color(currentColor.r, currentColor.g, currentColor.b, endAlpha);
-
-        // Desactivar la imagen después del fade out
-        if (image != null)
-        {
-            image.gameObject.SetActive(false);
-        }
+        image.color = new Color(c.r, c.g, c.b, toAlpha);
     }
 
     private IEnumerator GlowPulse(GameObject glowRoot, Color baseColor)
     {
         var children = glowRoot.GetComponentsInChildren<UnityEngine.UI.Image>();
 
-        // Aumentamos saturación y brillo
+        // Aumentamos saturaciï¿½n y brillo
         Color glowColor = SaturateAndBrighten(baseColor, 1f, 1f);
 
         float t = 0f;
 
         while (true)
         {
-            t += Time.deltaTime * 2.5f; // más rápido
+            t += Time.deltaTime * 2.5f; // mï¿½s rï¿½pido
             float pulse = (Mathf.Sin(t) + 1f) / 2f; // de 0 a 1
 
-            float alpha = Mathf.Lerp(0f, 0.8f, pulse); // más visible
+            float alpha = Mathf.Lerp(0f, 0.8f, pulse); // mï¿½s visible
 
             foreach (var img in children)
             {
