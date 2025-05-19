@@ -16,6 +16,7 @@ using UnityEngine.InputSystem;
 /// 
 /// También puede usar haptics si se dispone de un Gamepad.
 /// </summary>
+[RequireComponent(typeof(TTSNotifications))]
 public class NotificationUI : MonoBehaviour
 {
     // Referencias de UI
@@ -45,11 +46,13 @@ public class NotificationUI : MonoBehaviour
 
     // Referencias del Manager
     private NotificationManager manager;
-    private GameManager gameManager;  
+    private GameManager gameManager;
+    private TTSNotifications ttsNotifications;
     private void Awake()
     {
         gameManager = GameManager.Instance;
         manager = NotificationManager.Instance;
+        ttsNotifications = GetComponent<TTSNotifications>();
 
         if (manager != null)
         {
@@ -75,7 +78,10 @@ public class NotificationUI : MonoBehaviour
     {
         // Texto
         if (text != null)
+        {
             messageText.text = text;
+            ttsNotifications.SayNotification(messageText.text);
+        }
 
         // Icono
         if (icon != null)

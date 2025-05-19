@@ -22,6 +22,7 @@ public class LevelDropdown : MonoBehaviour
         levelDropdown.onValueChanged.AddListener(OnLevelChanged);
 
         // Establece el nivel actual al valor por defecto del dropdown
+        levelDropdown.value = (int)NotificationManager.Instance.CurrentLevel;
         SetLevelFromDropdown(levelDropdown.value);
     }
 

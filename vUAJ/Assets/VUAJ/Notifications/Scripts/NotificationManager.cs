@@ -41,6 +41,17 @@ public struct NotificationData
     public NotificationStyle style;
     public NotificationDuration duration;
 }
+
+public struct NotificationInfoSerialized
+{
+    public NotificationPosition CurrentPosition;
+    public NotificationSize CurrentSize;
+    public NotificationDuration CurrentDuration;
+    public NotificationStyle CurrentStyle;
+    public NotificationLevel CurrentLevel;
+}
+
+[RequireComponent(typeof(Serializer))]
 public class NotificationManager : MonoBehaviour
 {
     // Configuraciones default de notificación
@@ -94,12 +105,66 @@ public class NotificationManager : MonoBehaviour
     #endregion
 
     // Métodos para actualizar configuraciones si cambian
-    public void SetPosition(NotificationPosition newPosition) => CurrentPosition = CurrentPosition == newPosition ? CurrentPosition : newPosition;
-    public void SetSize(NotificationSize newSize) => CurrentSize = CurrentSize == newSize ? CurrentSize :  newSize;
-    public void SetDuration(NotificationDuration newDuration) => CurrentDuration = CurrentDuration == newDuration ? CurrentDuration : newDuration;
-    public void SetStyle(NotificationStyle newStyle) => CurrentStyle = CurrentStyle == newStyle ? CurrentStyle : newStyle;
-    public void SetType(NotificationLevel newType) => CurrentLevel = CurrentLevel == newType ? CurrentLevel : newType;
-    public void SetHapticFeedback(HapticFeedbackType newType) => CurrentHapticFeedback = CurrentHapticFeedback == newType ? CurrentHapticFeedback : newType;
+    public void SetPosition(NotificationPosition newPosition) { 
+        CurrentPosition = CurrentPosition == newPosition ? CurrentPosition : newPosition;
+        SaveData();
+    }
+    public void SetSize(NotificationSize newSize) { 
+        CurrentSize = CurrentSize == newSize ? CurrentSize :  newSize;
+        SaveData();
+    }
+    public void SetDuration(NotificationDuration newDuration) { 
+        CurrentDuration = CurrentDuration == newDuration ? CurrentDuration : newDuration;
+        SaveData();
+    }
+    public void SetStyle(NotificationStyle newStyle) {
+        CurrentStyle = CurrentStyle == newStyle ? CurrentStyle : newStyle;
+        SaveData();
+    }
+    public void SetType(NotificationLevel newType) { 
+        CurrentLevel = CurrentLevel == newType ? CurrentLevel : newType;
+        SaveData();
+    }
+
+    public void SetHapticFeedback(HapticFeedbackType newType) {
+        CurrentHapticFeedback = CurrentHapticFeedback == newType ? CurrentHapticFeedback : newType;
+        SaveData();
+    }
+
+    NotificationInfoSerialized serializedInfo = new NotificationInfoSerialized();
+
+    void SaveData()
+    {
+        if(serializer)
+        {
+            serializer.Clear();
+
+            serializedInfo.CurrentDuration = CurrentDuration;
+            serializedInfo.CurrentPosition = CurrentPosition;
+            serializedInfo.CurrentSize = CurrentSize;
+            serializedInfo.CurrentStyle = CurrentStyle;
+            serializedInfo.CurrentLevel = CurrentLevel;
+
+            serializer.Serialize(serializedInfo);
+            serializer.WriteToJSON("NotificationSettings/", gameObject.name);
+        }
+    }
+
+    Serializer serializer;
+    private void Start()
+    {
+        serializer = GetComponent<Serializer>();
+        if(serializer && serializer.getFromJSONStruct("NotificationSettings/"+gameObject.name, out NotificationInfoSerialized info) != -1)
+        {
+            serializedInfo = info;
+
+            CurrentPosition = info.CurrentPosition;
+            CurrentSize = info.CurrentSize;
+            CurrentDuration = info.CurrentDuration;
+            CurrentStyle = info.CurrentStyle;
+            CurrentLevel = info.CurrentLevel;
+        }
+    }
 
     /// <summary>
     /// Establece las referencias al canvas y overlays. Debe llamarse desde la escena que contiene estos elementos.

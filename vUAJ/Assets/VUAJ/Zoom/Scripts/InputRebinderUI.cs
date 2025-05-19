@@ -24,9 +24,27 @@ public class InputRebinderUI : MonoBehaviour
     // Conjunto de teclas que ya están en uso para evitar duplicados
     public static HashSet<KeyCode> usedKeys = new();
 
+    Serializer serializer = null;
+
+    [System.Serializable]
+    struct InputActionBindingPathSerializedInfo
+    {
+        public string effectivePath;
+    }
+
     private void Start()
     {
         // Inicializa la asignación de la tecla y configura la UI
+        serializer = GetComponent<Serializer>();
+
+        if(serializer && 
+            serializer.getFromJSONStruct(
+                "InputActions/" + actionReference.action.name + "_" + bindingIndex, 
+            out InputActionBindingPathSerializedInfo action) != -1) 
+        {
+            actionReference.action.ApplyBindingOverride(bindingIndex, action.effectivePath);
+        }
+
         RegisterInitialKey();
         UpdateBindingDisplay();
         rebindButton.onClick.AddListener(() => StartRebinding());
@@ -175,6 +193,15 @@ public class InputRebinderUI : MonoBehaviour
 
                 // Vuelve a habilitar el mapa de acciones.
                 action.actionMap.Enable();
+
+                if(serializer)
+                {
+                    serializer.Clear();
+                    InputActionBindingPathSerializedInfo info = new InputActionBindingPathSerializedInfo();
+                    info.effectivePath = action.bindings[bindingIndex].effectivePath;
+                    serializer.Serialize(info);
+                    serializer.WriteToJSON("InputActions", action.name + "_" + bindingIndex);
+                }
             })
             // Si la reasignación se cancela, se realiza lo siguiente.
             .OnCancel(op =>

@@ -50,6 +50,24 @@ public class CarouselItemController :  MonoBehaviour, IPointerClickHandler
             videoPlayer.playOnAwake = false;
             videoPlayer.Pause();
         }
+
+        LoadInitialConfig();
+    }
+
+    void LoadInitialConfig()
+    {
+        switch (configType)
+        {
+            case NotificationConfigType.Position:
+                carousel.StartItem = ((int)NotificationManager.Instance.CurrentPosition);
+                break;
+            case NotificationConfigType.Size:
+                carousel.StartItem = ((int)NotificationManager.Instance.CurrentSize);
+                break;
+            case NotificationConfigType.Style:
+                carousel.StartItem = ((int)NotificationManager.Instance.CurrentStyle);
+                break;
+        }
     }
 
     /// <summary>

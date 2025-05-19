@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Componente que tiene el dropdown del menu de opciones de accesibilidad de texto y permite
 // escoger una fuente entre una lista proporcionada de fuentes aptas para dislexia
@@ -14,6 +15,12 @@ public class FontDropdown : MonoBehaviour
 
     // Referencia al script de guardado
     Serializer serializer;
+
+    [System.Serializable]
+    struct DropdownSelectionSerializedInfo
+    {
+        public int value;
+    }
 
     // Crea las opciones del dropdown con las fuentes proporcionadas
     private void Start()
@@ -32,6 +39,25 @@ public class FontDropdown : MonoBehaviour
             options.Add(option);
         }
         fontDropdown.AddOptions(options);
+
+        if (serializer.getFromJSONStruct("SettingsMenu/"+gameObject.name, out DropdownSelectionSerializedInfo info) != -1) 
+        {
+            fontDropdown.value = info.value;   
+        }
+    }
+
+    void serializeDropdownInfo()
+    {
+        serializer.Clear();
+        var dropdown = GetComponent<TMP_Dropdown>();
+        if (dropdown != null)
+        {
+            DropdownSelectionSerializedInfo dropdownInfo = new DropdownSelectionSerializedInfo();
+            dropdownInfo.value = dropdown.value;
+            serializer.Serialize(dropdownInfo);
+            serializer.WriteToJSON("SettingsMenu", gameObject.name);
+        }
+        else Debug.LogWarning("El objeto no tiene asociado un componente Dropdown");
     }
 
     // Avisa al manager del cambio de fuente
@@ -42,11 +68,6 @@ public class FontDropdown : MonoBehaviour
             TextAccesibilityManager.Instance.onFontChanged(fonts[index]);
         }
 
-        serializer.Clear();
-        var dropdown = GetComponent<TMP_Dropdown>();
-        if (dropdown != null) serializer.Serialize(this.GetComponent<TMP_Dropdown>());
-        else Debug.LogWarning("El objeto no tiene asociado un componente Dropdown");
-        serializer.WriteToJSON(gameObject.name);
+        serializeDropdownInfo();
     }
-
 }

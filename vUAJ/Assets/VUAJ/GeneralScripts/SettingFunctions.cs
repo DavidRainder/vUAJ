@@ -1,5 +1,3 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,13 +8,57 @@ public class SettingFunctions : MonoBehaviour
     // Referencia al script de guardado
     Serializer serializer;
 
+    [System.Serializable]
+    struct ToggleSerializedInfo
+    {
+        public bool isOn;
+    }
+
+    [System.Serializable]
+    struct FontSizeSerializedInfo
+    {
+        public float fontSize;
+    }
+
+    string fontSizeInfoPath = "FontSize";
+
     private void Start()
     {
         serializer = GetComponent<Serializer>();
-        if (gameObject.GetComponent<Toggle>() != null)
+        Toggle toggle = GetComponent<Toggle>();
+        if (toggle != null && 
+            serializer.getFromJSONStruct("SettingsMenu/" + gameObject.name, out ToggleSerializedInfo tg) != -1)
         {
-            object toggle = serializer.getFromJSON(gameObject.name, typeof(Toggle));
+            toggle.isOn = tg.isOn;
         }
+
+        if (serializer.getFromJSONStruct("SettingsMenu/" + fontSizeInfoPath, out FontSizeSerializedInfo fS) != -1)
+        {
+            onFontSizeChanged(fS.fontSize);
+        }
+    }
+
+    void serializeToJSONToggle()
+    {
+        serializer.Clear();
+        var toggle = GetComponent<Toggle>();
+        if (toggle != null)
+        {
+            ToggleSerializedInfo toggleSerializedInfo = new ToggleSerializedInfo();
+            toggleSerializedInfo.isOn = toggle.isOn;
+            serializer.Serialize(toggleSerializedInfo);
+            serializer.WriteToJSON("SettingsMenu", gameObject.name);
+        }
+        else Debug.LogWarning("El objeto no tiene asociado un componente Toggle");
+    }
+
+    void serializeToJSONFontSize(float size)
+    {
+        serializer.Clear();
+        FontSizeSerializedInfo fontSizeInfo = new FontSizeSerializedInfo();
+        fontSizeInfo.fontSize = size;
+        serializer.Serialize(fontSizeInfo);
+        serializer.WriteToJSON("SettingsMenu", fontSizeInfoPath);
     }
 
     // Activa o desactiva el modo TTS (Text To Speech)
@@ -24,11 +66,7 @@ public class SettingFunctions : MonoBehaviour
     {
         TTSManager.Instance.TTSActivation();
 
-        serializer.Clear();
-        var toggle = GetComponent<Toggle>();
-        if (toggle != null) serializer.Serialize(this.GetComponent<Toggle>());
-        else Debug.LogWarning("El objeto no tiene asociado un componente Toggle");
-        serializer.WriteToJSON(gameObject.name);
+        serializeToJSONToggle();
     }
 
     // Activa o desactiva el modo Volume Perception (colliders resaltados con una malla de color)
@@ -36,11 +74,7 @@ public class SettingFunctions : MonoBehaviour
     {
         VolumePerceptionManager.Instance.setShowColliders(show);
 
-        serializer.Clear();
-        var toggle = GetComponent<Toggle>();
-        if (toggle != null) serializer.Serialize(this.GetComponent<Toggle>());
-        else Debug.LogWarning("El objeto no tiene asociado un componente Toggle");
-            serializer.WriteToJSON(gameObject.name);
+        serializeToJSONToggle();
     }
 
     // Activa o desactiva el modo dislexia friendly (todas los textos del juego cambian a la fuente elegida)
@@ -48,11 +82,7 @@ public class SettingFunctions : MonoBehaviour
     {
         TextAccesibilityManager.Instance.setDislexiaMode(dislexiaMode);
 
-        serializer.Clear();
-        var toggle = GetComponent<Toggle>();
-        if (toggle != null) serializer.Serialize(this.GetComponent<Toggle>());
-        else Debug.LogWarning("El objeto no tiene asociado un componente Toggle");
-        serializer.WriteToJSON(gameObject.name);
+        serializeToJSONToggle();
     }
 
     // Cambia el tamanyo de los textos
@@ -60,10 +90,6 @@ public class SettingFunctions : MonoBehaviour
     {
         TextAccesibilityManager.Instance.onFontSizeChanged(value);
 
-        serializer.Clear();
-        var button = GetComponent<Button>();
-        if (button != null) serializer.Serialize(value);
-        else Debug.LogWarning("El objeto no tiene asociado un componente Button");
-        serializer.WriteToJSON("ButtonSize");
+        serializeToJSONFontSize(value);
     }
 }
