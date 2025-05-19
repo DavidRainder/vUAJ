@@ -9,59 +9,72 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
+[Tooltip("Regenta el canvas y opciones de ajustes que permiten la customización de un HUD")]
 public class HUDCustom : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField]
+    [SerializeField, Tooltip("Representación de la pantalla de juego. Fija los límites de movimiento de elementos.")]
     private GameObject panel;
+    /// <summary>
+    /// Prefab original del HUD para realizar las instancias de visualización
+    /// </summary>
     private GameObject defaultPrefab;
+    /// <summary>
+    /// Objeto de visualización del HUD por defecto
+    /// </summary>
     private GameObject defaultHUD;
+    /// <summary>
+    /// Objeto de visualización del HUD customizado
+    /// </summary>
     private GameObject customHUD;
-    [SerializeField]
+    [SerializeField, Tooltip("Opciones de selección de HUD")]
     private TMP_Dropdown presetDropdown;
-    [SerializeField]
+    [SerializeField, Tooltip("Botón reset CustomHUD")]
     private Button resetCustomButton;
-    [SerializeField]
+    [SerializeField, Tooltip("Slider tamaño CustomHUD")]
     private Slider shadowSlider;
-    [SerializeField]
+    [SerializeField, Tooltip("Texto tamaño CustomHUD")]
     private TextMeshProUGUI shadowNumber;
-    [SerializeField]
+    [SerializeField, Tooltip("Slider sombra CustomHUD")]
     private Slider scaleSlider;
-    [SerializeField]
+    [SerializeField, Tooltip("Texto sombra CustomHUD")]
     private TextMeshProUGUI scaleNumber;
-    [SerializeField]
+    [SerializeField, Tooltip("Conjunto de UI elements para CustomHUD")]
     private GameObject customSettings;
-    [SerializeField]
+    [SerializeField, Tooltip("Visualización de valores del DefaultHUD en elementos no interactuables")] // Para efecto visual, no tienen recupercusión en código
     private GameObject defaultFakeSettings;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Referencia HUD
+        // Referencia prefab HUD
         defaultPrefab = HUDManager.Instance.getDefaultPrefab();
 
-        // Instancia HUD prefab visualizer 
+        // Instancias de los visualizadores de HUDS
             // Default
-        Dictionary<string, HUDManager.ObjectInfo> HUDInfo = new Dictionary<string, HUDManager.ObjectInfo>();
         defaultHUD = Instantiate(defaultPrefab, panel.transform); 
+        Dictionary<string, HUDManager.ObjectInfo> HUDInfo = new Dictionary<string, HUDManager.ObjectInfo>();
         
         RectTransform overviewRect = panel.GetComponent<RectTransform>();
         RectTransform rect = defaultHUD.GetComponent<RectTransform>();
+
         foreach (Transform tr in defaultHUD.transform)
         {
-            HUDInfo.Add(tr.name, new HUDManager.ObjectInfo (tr.localScale, 1, 0, tr.position));
-            removeInteractableComp(tr);
-        }
-        HUDManager.Instance.saveConfig(HUDManager.HUDTypes.defaultHUD, HUDInfo); // Save
+            HUDInfo.Add(tr.name, new HUDManager.ObjectInfo (tr.localScale, 1, 0, tr.position)); // Valores iniciales default
+            removeInteractableComp(tr); 
+        } 
 
+        // Guardado inicial en JSON del HUD default según prefab
+        HUDManager.Instance.saveConfig(HUDManager.HUDTypes.defaultHUD, HUDInfo);
 
             // Custom 
         customHUD = Instantiate(defaultPrefab, panel.transform);
-        applySavedToCustom(); // Load
-;
+        
+        // Load del HUD customizado según JSON en el equipo o por copia de default 
+        applySavedToCustom(); 
         rect = customHUD.GetComponent<RectTransform>();
         foreach (Transform tr in customHUD.transform)
         { 
-            tr.gameObject.AddComponent<Drag>();
+            tr.gameObject.AddComponent<Drag>(); // Habilita movmiento en panel
             RectTransform rectChild = tr.gameObject.GetComponent<RectTransform>();
             if (tr.gameObject.GetComponent<UnityEngine.UI.DropShadow>()== null)
             {
@@ -80,8 +93,14 @@ public class HUDCustom : MonoBehaviour
         defaultHUD.SetActive(false);
         defaultFakeSettings.SetActive(false);
     }
+
+    /// <summary>
+    /// Deshabilita los componentes que puedan ocasionar interacción y dificultar el movimiento de componentes
+    /// </summary>
+    /// <param name="tr"></param>
     void removeInteractableComp(Transform tr)
     {
+        // De momento deshabilita los botones y sliders contenidos
         Button [] button; 
         if ((button=tr.gameObject.GetComponentsInChildren<Button>()) != null) {
             for (int i = 0; i < button.Length; i++)
@@ -98,11 +117,19 @@ public class HUDCustom : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Guardado de la customización actual
+    /// </summary>
     public void saveCustom()
     {
         HUDManager.Instance.SetCurrentHUDType(HUDManager.HUDTypes.customHUD);
         HUDManager.Instance.saveConfig(HUDManager.HUDTypes.customHUD, null, customHUD);
     }
+
+    /// <summary>
+    /// Actualiza valores y llama a la modificación de tamaños de elementos del HUD
+    /// </summary>
+    /// <param name="value"></param>
     public void sliderScale(System.Single value)
     {
         scaleNumber.text = ((int)scaleSlider.value).ToString() + "%";
@@ -110,23 +137,36 @@ public class HUDCustom : MonoBehaviour
         HUDManager.Instance.scaleFactor = scaleSlider.value / 100;
 
     }
+
+    /// <summary>
+    /// Modifica el tamaño de todos los items del HUD customizable
+    /// </summary>
+    /// <param name="scale"></param>
     void scaleItems(float scale)
     {
         foreach (Transform tr in customHUD.transform)
         {
-            //child.GetComponent<RectTransform>().localScale *= 0.5f;
             RectTransform rectChild = tr.gameObject.GetComponent<RectTransform>();
             rectChild.localScale = HUDManager.Instance.getCustomObjBaseScale(tr.gameObject.name) * scale/100;
             rectChild.ForceUpdateRectTransforms();
         }
 
     }
+    /// <summary>
+    /// Actualiza valores y llama a la modificación de sombras de elementos del HUD
+    /// </summary>
+    /// <param name="value"></param>
     public void sliderShadow(System.Single value)
     {
         shadowNumber.text = ((int)shadowSlider.value).ToString() + "%";
         setShadows(shadowSlider.value);
         HUDManager.Instance.shadowFactor = shadowSlider.value;
     }
+
+    /// <summary>
+    /// Settea la sombra de todos los elementos del HUD customizable
+    /// </summary>
+    /// <param name="intensity"></param>
     void setShadows(float intensity)
     {
         foreach (Transform tr in customHUD.transform)
@@ -138,13 +178,12 @@ public class HUDCustom : MonoBehaviour
             shadow.EffectDistance = new Vector2(0f, 0f);
         }
     }
-    void DrawRect(RectTransform rect)
-    {
-        Gizmos.DrawWireCube(new Vector3(rect.anchoredPosition.x, rect.anchoredPosition.y, 0.01f), new Vector3(rect.rect.width, rect.rect.height, 0.01f));
-    }
+
+    /// <summary>
+    /// Cambio de HUD seleccionado
+    /// </summary>
     public void changePreset()
     {
-        Debug.Log("hiii");
         if (presetDropdown.value == 0)
         {
             customHUD.SetActive(true);
@@ -158,11 +197,14 @@ public class HUDCustom : MonoBehaviour
             customHUD.SetActive(false);
             defaultHUD.SetActive(true);
             customSettings.SetActive(false);
-            defaultFakeSettings.SetActive(true);
+            defaultFakeSettings.SetActive(true); // Para visualización
             HUDManager.Instance.SetCurrentHUDType(HUDManager.HUDTypes.defaultHUD);
-
         }
     }
+
+    /// <summary>
+    /// Comprueba si existe un guardado del custom HUD y lo carga. Actualiza las herramientas de UI asociadas.
+    /// </summary>
     void applySavedToCustom()
     {
         if (!HUDManager.Instance.applySavedConfigToHUD(customHUD, HUDManager.HUDTypes.customHUD))
@@ -177,21 +219,22 @@ public class HUDCustom : MonoBehaviour
         scaleSlider.onValueChanged.AddListener(sliderScale);
         shadowSlider.onValueChanged.AddListener(sliderShadow);
     }
+
+    /// <summary>
+    /// Reset del HUD customizable a último guardado (o default)
+    /// </summary>
     public void resetCustom()
     {
        applySavedToCustom();
     }
 
+    /// <summary>
+    /// Inicialización de sliders y textos asociados
+    /// </summary>
     public void initSliders()
     {
         shadowSlider.value = HUDManager.Instance.shadowFactor; 
         scaleSlider.value = HUDManager.Instance.scaleFactor * 100;
         shadowNumber.text = (int)shadowSlider.value + "%"; scaleNumber.text = (int)scaleSlider.value + "%";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

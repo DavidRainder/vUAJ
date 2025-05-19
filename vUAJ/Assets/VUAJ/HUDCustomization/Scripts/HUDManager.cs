@@ -1,28 +1,39 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static HUDCustom;
 
+[Tooltip("Contiene el prefab del HUD a instanciar y serializa las modificaciones de un HUD customizable." +
+    "Aplica cambios sobre HUDS y los guarda.")]
 public class HUDManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField]
+    [SerializeField, Tooltip("Prefab del HUD in game para visualización de la customización y valores por defecto")]
     private GameObject HUDprefab;
+
+    [Tooltip("Factor de escalado de los items del HUD customizado")]
     public float scaleFactor;
+
+    [Tooltip("Factor de sombreado de los items del HUD customizado")]
     public float shadowFactor;
 
-    Dictionary<string, ObjectInfo> HUDInfo; // Custom HUD info
+    Dictionary<string, ObjectInfo> HUDInfo; // Información sobre los cambios de HUD para serialización (ha perdido relevancia)
 
+    [Tooltip("Tipos de HUD")]
     public enum HUDTypes { defaultHUD, customHUD };
 
-    HUDTypes currentSelection;
+    /// <summary>
+    /// Tipo HUD a instanciarse en el juego seleccionado en el momento
+    /// </summary>
+    HUDTypes currentSelection; 
 
     static private HUDManager _instance;
     public static HUDManager Instance { get { return _instance; } }
 
+    /// <summary>
+    /// Estrctura que habilita el guardado de modificaciones en el HUD. Contiene información sobre el tamaño, posición y sombra.
+    /// </summary>
     public struct ObjectInfo
     {
-        public Vector3 baseScale;
+        public Vector3 baseScale; // Escala base antes de sufrir modificación alguna
         public float scaleFactor;
         public float shadowFactor;
         public Vector3 pos;
@@ -43,7 +54,7 @@ public class HUDManager : MonoBehaviour
 
         HUDInfo = new Dictionary<string, HUDManager.ObjectInfo>();
 
-        // Default values for later customization
+        // Valores default para la customización posterior
         scaleFactor = 1.0f;
         shadowFactor = 0.0f;
         currentSelection = HUDTypes.defaultHUD;
@@ -51,24 +62,29 @@ public class HUDManager : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
     }
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    /// <summary>
+    /// Devuelve la escala original del objeto previa a modificaciones.
+    /// </summary>
+    /// <param name="objName"></param>
+    /// <returns></returns>
     public Vector3 getCustomObjBaseScale(string objName)
     {
         return HUDInfo[objName].baseScale;
     }
+
+    /// <summary>
+    /// Devuelve el prefab original de HUD
+    /// </summary>
+    /// <returns></returns>
     public GameObject getDefaultPrefab()
     {
         return HUDprefab;
     }
-    public void enableShadows() // Add default shadows
+    /// <summary>
+    /// Añade el componente de sombra y valores default a todos los objetos del HUD si no lo poseen de antemano
+    /// </summary>
+    public void enableShadows() 
     {
         foreach (Transform tr in HUDprefab.transform)
         {
@@ -84,10 +100,19 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Serializa y guarda en un JSON los datos de todos los objetos de un HUD.
+    /// </summary>
+    /// <param name="type">Tipo de HUD (Custom, Default)</param>
+    /// <param name="objInfo">Información previa para sobreescribir valores del manager</param>
+    /// <param name="currHUD">Objeto HUD que guardar</param>
     public void saveConfig(HUDTypes type, Dictionary<string, HUDManager.ObjectInfo> objInfo = null, GameObject currHUD = null)
     {
         if(objInfo != null) { HUDInfo = objInfo; }
-        if (currHUD == null) { currHUD = HUDprefab; }
+        if (currHUD == null) { currHUD = HUDprefab; } // Si no guardamos un objeto específico, guardaremos los valores del default
+
+        // Serialización y actualización de valores
         string totalInfo = "{\n";
         for (int i = 0; i < currHUD.transform.childCount; i++)
         {
@@ -99,13 +124,18 @@ public class HUDManager : MonoBehaviour
                 aux.scaleFactor = scaleFactor;
                 aux.shadowFactor = shadowFactor;
             }
-            else
+            else 
             {
+                // Si es default no guardamos modificaciones
                 aux.scaleFactor = 1.0f;
                 aux.shadowFactor = 0.0f;
             }
+
+            // Actualización de la posición a guardar
             aux.pos = tr.GetComponent<RectTransform>().anchoredPosition3D;
             HUDInfo[tr.gameObject.name] = aux;
+
+            // Conversión del struct y guardado en el JSON del tipo de HUD
             string info = JsonUtility.ToJson(aux);
             if (i == currHUD.transform.childCount - 1)
             {
@@ -118,14 +148,17 @@ public class HUDManager : MonoBehaviour
             }
         }
         System.IO.File.WriteAllText(Application.persistentDataPath + "/"+ type.ToString()+".json", totalInfo + " \n}");
-
-        //prueba de lectura json 
-        //GameObject aux2 = Instantiate(defaultPrefab, panel.transform);
-        //customHUD.SetActive(false); defaultHUD.SetActive(false);
-        //applyCustomToHUDPrefab(ref aux2);
     }
-    public bool applySavedConfigToHUD(GameObject HUDObject, HUDTypes type) // Default or custom
+
+    /// <summary>
+    /// Deserializa el HUD contenido en un JSON y lo aplica a un objeto HUD
+    /// </summary>
+    /// <param name="HUDObject">Objeto HUD a modificar</param>
+    /// <param name="type">Tipo de HUD (Custom, Default)</param>
+    /// <returns></returns>
+    public bool applySavedConfigToHUD(GameObject HUDObject, HUDTypes type) 
     {
+        //Comprobamos que existe el archivo de guardado
         string path = Path.Combine(Application.persistentDataPath, type.ToString()+".json");
 
         if (File.Exists(path))
@@ -139,6 +172,8 @@ public class HUDManager : MonoBehaviour
                 {
                     ObjectInfo data = JsonUtility.FromJson<ObjectInfo>(obj);
                     RectTransform rect = tr.GetComponent<RectTransform>();
+
+                    // Actualizaciones de posición, tamaño y sombras
                     rect.anchoredPosition3D = data.pos;
                     rect.anchoredPosition3D = new Vector3(rect.anchoredPosition3D.x, rect.anchoredPosition3D.y, 0);
                     rect.localScale = data.baseScale * data.scaleFactor;
@@ -150,7 +185,7 @@ public class HUDManager : MonoBehaviour
                     }
                     if (type == HUDTypes.customHUD)
                     {
-                        HUDInfo[tr.gameObject.name] = data; //shadow spread entre 1.5?
+                        HUDInfo[tr.gameObject.name] = data; // Guardo las modificaciones actuales 
                         scaleFactor = data.scaleFactor;
                         shadowFactor = data.shadowFactor;
                     }
@@ -159,17 +194,28 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"{type.ToString()} HUD no guardado en {path}, se mantiene el default");
+            Debug.LogWarning($"{type.ToString()} HUD no guardado en {path}, se mantiene el default"); // Si el prefab de HUD asignado está bien no causará ningún fallo
             return false;
         }
         return true;
     }
 
+    /// <summary>
+    /// Establece la selección de HUD actual (a instanciarse en el juego).
+    /// </summary>
+    /// <param name="type"></param>
     public void SetCurrentHUDType(HUDTypes type)
     {
         currentSelection = type;
     }
-    string ExtractJsonObject(string fullJson, string key)
+
+    /// <summary>
+    /// Método auxiliar para el encuentro de claves y extracción de objetos de un guardado en JSON
+    /// </summary>
+    /// <param name="fullJson"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    string ExtractJsonObject(string fullJson, string key) // A simplificar si se incorpora algo adicional a JSONUtility
     {
         int keyIndex = fullJson.IndexOf($"\"{key}\"");
         if (keyIndex == -1) return null;
@@ -189,7 +235,6 @@ public class HUDManager : MonoBehaviour
                 return fullJson.Substring(braceStart, braceEnd - braceStart + 1);
             }
         }
-
         return null;
     }
 
