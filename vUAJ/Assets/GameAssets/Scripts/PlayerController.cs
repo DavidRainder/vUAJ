@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     private NotificationManager notificationManager;
 
+    private bool _inputIsActive = true;
 
     void Start()
     {
@@ -35,24 +36,38 @@ public class PlayerController : MonoBehaviour
         CheckGround();
     }
 
+    public void ActivateInput()
+    {
+        _inputIsActive = true;
+    }
+
+    public void DeactivateInput()
+    {
+        _inputIsActive = false;
+    }
+
     void Update()
     {
         if (GameManager.Instance.GameIsPaused) return;
-        if (Input.GetButton("Horizontal")) 
+        if (_inputIsActive)
         {
-            moveInput = Input.GetAxis("Horizontal");
-            Vector3 direction = transform.right * moveInput;
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, movingSpeed * Time.deltaTime);
-            animator.SetInteger("playerState", 1); // Turn on run animation
+            if (Input.GetButton("Horizontal"))
+            {
+                moveInput = Input.GetAxis("Horizontal");
+                Vector3 direction = transform.right * moveInput;
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, movingSpeed * Time.deltaTime);
+                animator.SetInteger("playerState", 1); // Turn on run animation
+            }
+            else
+            {
+                if (isGrounded) animator.SetInteger("playerState", 0); // Turn on idle animation
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
-        else
-        {
-            if (isGrounded) animator.SetInteger("playerState", 0); // Turn on idle animation
-        }
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded )
-        {
-            rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-        }
+        
         if (!isGrounded)animator.SetInteger("playerState", 2); // Turn on jump animation
 
         if(facingRight == false && moveInput > 0)

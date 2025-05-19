@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [Tooltip("Genera y controla una cámara que funcionará como una lupa." +
@@ -53,6 +54,11 @@ public class MagnifyingGlassController : MonoBehaviour
         "Por defecto: Ambos hijos del MagnifyingGlass (Background:Canvas y RenderTexture:Camera.")] 
     GameObject[] _childToActivate = null;
     #endregion
+
+    [SerializeField]
+    UnityEvent _onActivate;
+    [SerializeField]
+    UnityEvent _onDeactivate;
 
     /// <summary>
     /// Flag de activación de la Lupa
@@ -164,6 +170,7 @@ public class MagnifyingGlassController : MonoBehaviour
     /// <param name="ctx"> Contexto de Input Action </param>
     void OnTryActivate(InputAction.CallbackContext ctx)
     {
+
         // Cambiamos la flag y activamos la Lupa en función de ello
         _isActive = !_isActive;
         EnablaCamera(_isActive);
@@ -171,10 +178,12 @@ public class MagnifyingGlassController : MonoBehaviour
         // Suscribimos las acciones de movimiento y aumento de tamaño si estamos activos
         if(_isActive)
         {
+            _onActivate.Invoke();
             Subscribe();   
         }
         else // Desuscribimos en caso contrario
         {
+            _onDeactivate.Invoke();
             Unsubscribe();
 
             // Paramos el movimiento

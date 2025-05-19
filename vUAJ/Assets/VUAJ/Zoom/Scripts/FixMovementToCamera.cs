@@ -33,16 +33,16 @@ public class FixMovementToCamera : MonoBehaviour
     // calculamos el ancho y alto de la cámara
     void Start()
     {
+        // si el usuario no pone cámara, se asume la MainCamera
+        if (_mainCamera == null)
+        {
+            _mainCamera = Camera.main;
+        }
+
         // el alto es su ortographic size
         _height = _mainCamera.orthographicSize;
         // el ancho es una operación realizada con su aspect ratio
         _width = _mainCamera.aspect * _height;
-        
-        // si el usuario no pone cámara, se asume la MainCamera
-        if(_mainCamera == null)
-        {
-            _mainCamera = Camera.main;
-        }
     }
 
     /// <summary>

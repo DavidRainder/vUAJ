@@ -1,0 +1,150 @@
+{
+    "name": "vUAJ-DefaultActions",
+    "maps": [
+        {
+            "name": "vUAJ_Actions",
+            "id": "2c42cce1-7065-4522-9d03-5dd08c607dd3",
+            "actions": [
+                {
+                    "name": "ActivateMagnifyingGlass",
+                    "type": "Button",
+                    "id": "4302b31e-bb61-4adc-bca2-b445a035c613",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveMagnifyingGlass",
+                    "type": "Value",
+                    "id": "f23d5d31-591e-44db-aad4-c585abb5e28d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ExpandMagnifyingGlass",
+                    "type": "Button",
+                    "id": "cf2cc4c8-29cb-4978-a402-7a5fe11603c0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReduceMagnifyingGlass",
+                    "type": "Button",
+                    "id": "e7b66cc2-c282-470e-9ada-6a50d5c9e594",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c2e8afd0-bfa3-445f-a130-cb042bc8273f",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "ActivateMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "VerticalMovement",
+                    "id": "925f0e9b-cb45-428e-82a1-711c568e602e",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveMagnifyingGlass",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "3112ed56-b78b-436c-a6a5-f135dfdd371b",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "MoveMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "7e289d0e-4af6-4766-b0cb-4db71e11275f",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "MoveMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "9cda750d-9351-4bf7-badf-5bb4696a465a",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "MoveMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "4878dd76-7e91-4a5a-b7d1-94c27f510b82",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "MoveMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e0e8557d-8c96-431d-a92e-538bbfd11b59",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExpandMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25786fdd-d3e6-4b58-9862-a690370687db",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReduceMagnifyingGlass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
