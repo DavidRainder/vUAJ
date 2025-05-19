@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/SampleScenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/FontOptions.unity
+    path: Assets/Scenes/SampleScenes/FontOptions.unity
     guid: e4cd9e93062fa4d44b09112a430c9c86
   - enabled: 1
-    path: Assets/Scenes/VolumePercepcion.unity
+    path: Assets/Scenes/SampleScenes/VolumePercepcion.unity
     guid: 16d98dffd09a6614abad0bc045152786
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/SampleScenes/Game.unity
     guid: 4a59ccb58148e5447a9206d6690c9a72
   - enabled: 1
-    path: Assets/Scenes/Settings.unity
+    path: Assets/VUAJ/Settings.unity
     guid: c1d2a389caf58634eab32cb50eee6e63
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 745fa158feb1dec48a91ef079325c198, type: 3}

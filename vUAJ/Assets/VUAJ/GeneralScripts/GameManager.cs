@@ -10,46 +10,8 @@ using UnityEngine.UI;
 /// El GameManager proporciona una estructura básica que los desarrolladores pueden ampliar con la lógica interna de su juego. 
 /// Aunque puede ser utilizado tal cual, se recomienda extenderlo para incluir las características específicas del juego que se está desarrollando.
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : vUAJBaseGameManager
 {
-    // Singleton instance
-    #region Singleton
-    private static GameManager _instance = null;
-
-    public static GameManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("Accesibility Manager not present in scene");
-            }
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    #endregion
-
-    /// <summary>
-    /// La propiedad `GameIsPaused` es un valor booleano que indica si el juego está actualmente en pausa. 
-    /// Todos los objetos de la escena deben verificar si `GameManager.Instance.GameIsPaused` es verdadero antes de ejecutar sus 
-    /// lógicas de actualización o interacción. Esto garantiza que las notificaciones y otros eventos importantes no interfieran 
-    /// con la jugabilidad cuando el juego está pausado. Se recomienda utilizar este patrón para gestionar el estado global del juego.
-    /// </summary>
-    public bool GameIsPaused = false; 
-
 // ---------------------------------------------------------------------------------------------------------------
     //Variables para la lógica del juego
     public int coinsCounter = 0;

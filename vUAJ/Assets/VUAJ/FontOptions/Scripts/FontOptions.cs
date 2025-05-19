@@ -6,7 +6,7 @@ using UnityEngine;
 public class FontOptions : MonoBehaviour
 {
     // Refencia al componente de texto
-    TMP_Text text;
+    TMP_Text text = null;
     // Fuente original
     TMP_FontAsset OGfont;
     // Tamanyo original
@@ -16,10 +16,10 @@ public class FontOptions : MonoBehaviour
     // han cambiado en el menu
     void Start()
     {
+        text = gameObject.GetComponent<TextMeshProUGUI>();
         TextAccesibilityManager.Instance.fontSizeChange += changeSize;
         TextAccesibilityManager.Instance.fontChange += changeFont;
 
-        text = gameObject.GetComponent<TextMeshProUGUI>();
         if (text)
         {
             OGfont = text.font;

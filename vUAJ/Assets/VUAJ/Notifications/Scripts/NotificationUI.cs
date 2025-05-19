@@ -46,11 +46,11 @@ public class NotificationUI : MonoBehaviour
 
     // Referencias del Manager
     private NotificationManager manager;
-    private GameManager gameManager;
+    private vUAJBaseGameManager gameManager;
     private TTSNotifications ttsNotifications;
     private void Awake()
     {
-        gameManager = GameManager.Instance;
+        gameManager = vUAJBaseGameManager.Instance;
         manager = NotificationManager.Instance;
         ttsNotifications = GetComponent<TTSNotifications>();
 
