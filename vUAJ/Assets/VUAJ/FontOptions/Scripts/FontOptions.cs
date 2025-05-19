@@ -1,13 +1,19 @@
 using TMPro;
 using UnityEngine;
 
+// Componente que se ha de poner a todos los textos que se quiera que puedan ser afectados en
+// tamanyo y fuente cuando se cambian estas opciones en el menu de accesibilidad de texto
 public class FontOptions : MonoBehaviour
 {
+    // Refencia al componente de texto
     TMP_Text text;
+    // Fuente original
     TMP_FontAsset OGfont;
+    // Tamanyo original
     float OGfontsize;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Se suscribe a los eventos de cambio de fuente y de tamanyo, y se actualiza si estos
+    // han cambiado en el menu
     void Start()
     {
         TextAccesibilityManager.Instance.fontSizeChange += changeSize;
@@ -25,6 +31,7 @@ public class FontOptions : MonoBehaviour
         else Debug.LogWarning("The object does not have a TextMeshPro component so the script doesnt have an effect");
     }
 
+    // Cambia la fuente del texto a la proporcionada
     void changeFont(TMP_FontAsset font)
     {
         if (text != null)
@@ -36,6 +43,7 @@ public class FontOptions : MonoBehaviour
         else Debug.LogWarning("The object does not have a TextMeshPro component so the script doesnt have an effect");
     }
 
+    // Cambia el tamanyo del texto (x1, x1.25, x1.5, x1.75) segun el float proporcionado
     void changeSize(float size)
     {
         if (text != null)

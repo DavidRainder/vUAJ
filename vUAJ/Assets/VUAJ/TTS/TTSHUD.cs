@@ -1,15 +1,19 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
+// Componente que se ha de poner a todos los elementos que se quiera que tengan audiodescripcion
+// asociada al clickar en ellos
 public class TTSHUD : MonoBehaviour, IPointerClickHandler
 {
+    // Si se quiere que se lea lo que pone en el componente de texto
     [SerializeField]
     TMP_Text UIText= null;
+    // Si se quiere que se lea una descripcion metida a mano desde el editor
     [SerializeField]
     string fieldText = null;
 
+    // Lee la descripcion al ser clickado
     public void OnPointerClick(PointerEventData eventData)
     {
         if (UIText != null)

@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+// Componente que tiene el dropdown del menu de opciones de accesibilidad de texto y permite
+// escoger una fuente entre una lista proporcionada de fuentes aptas para dislexia
 public class FontDropdown : MonoBehaviour
 {
+    // Lista de opciones de fuentes
     [SerializeField]
     TMP_FontAsset[] fonts;
+    // Referencia al propio dropdown 
     TMP_Dropdown fontDropdown;
 
+    // Crea las opciones del dropdown con las fuentes proporcionadas
     private void Start()
     {
         fontDropdown = GetComponent<TMP_Dropdown>();
@@ -26,6 +30,7 @@ public class FontDropdown : MonoBehaviour
         fontDropdown.AddOptions(options);
     }
 
+    // Avisa al manager del cambio de fuente
     public void UpdateUIFont(int index)
     {
         if (index < fonts.Length && index >= 0)
