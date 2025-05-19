@@ -149,7 +149,7 @@ namespace Platformer
             {
                 for(int i = 0; i < other.gameObject.transform.childCount; i++)
                 {
-                    other.gameObject.transform.GetChild(i).gameObject.SetActive(true);
+                    if(other.gameObject.transform.GetChild(i).gameObject.name != "border") other.gameObject.transform.GetChild(i).gameObject.SetActive(true);
                 }
             }
         }
