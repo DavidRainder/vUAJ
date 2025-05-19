@@ -465,10 +465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367168df225a73e43a2b1e51ac70d0dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activationAction: {fileID: -441974754221784020, guid: fa7c9c4992ffb4d4aaf9043de9975933, type: 3}
-  _expandAction: {fileID: -3163409843056059804, guid: fa7c9c4992ffb4d4aaf9043de9975933, type: 3}
-  _reduceAction: {fileID: -7165248759741754981, guid: fa7c9c4992ffb4d4aaf9043de9975933, type: 3}
-  _movementAction: {fileID: -1463372009419525394, guid: fa7c9c4992ffb4d4aaf9043de9975933, type: 3}
+  _activationAction: {fileID: -441974754221784020, guid: 745fa158feb1dec48a91ef079325c198, type: 3}
+  _expandAction: {fileID: -3163409843056059804, guid: 745fa158feb1dec48a91ef079325c198, type: 3}
+  _reduceAction: {fileID: -7165248759741754981, guid: 745fa158feb1dec48a91ef079325c198, type: 3}
+  _movementAction: {fileID: -1463372009419525394, guid: 745fa158feb1dec48a91ef079325c198, type: 3}
   _expandFactor: 5
   _movementSpeed: 7.5
   _childToActivate:
@@ -559,7 +559,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 55
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 5f634be3b89192b478714cf2a06db399, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
