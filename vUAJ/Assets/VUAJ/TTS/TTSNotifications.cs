@@ -4,6 +4,8 @@ using UnityEngine;
 //Se debe añadir a un objeto en escena para que funcione
 public class TTSNotifications : MonoBehaviour
 {
+
+
     [SerializeField]
     public float keyCooldown = 2f;
     public float elapsedTime = 0f;

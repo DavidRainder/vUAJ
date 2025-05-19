@@ -339,6 +339,7 @@ GameObject:
   - component: {fileID: 303542210}
   - component: {fileID: 303542212}
   - component: {fileID: 303542211}
+  - component: {fileID: 303542213}
   m_Layer: 0
   m_Name: TTSManager
   m_TagString: Untagged
@@ -373,7 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9622a52f0b52e4d409fc42cb87e8de32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key_repeat: 114
   nameFile: subs.json
 --- !u!114 &303542212
 MonoBehaviour:
@@ -388,6 +388,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TTSactive: 0
+--- !u!114 &303542213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303542209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507f3399436ec6b449370dcb2e44c725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyCooldown: 2
+  elapsedTime: 0
+  key_repeat: 114
 --- !u!1 &643433979
 GameObject:
   m_ObjectHideFlags: 0

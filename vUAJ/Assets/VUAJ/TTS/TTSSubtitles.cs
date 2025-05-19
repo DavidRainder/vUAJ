@@ -7,8 +7,34 @@ using System.Collections.Generic;
 //Añadir a un objeto de la escena para que lea los subtitulos que se le pasen
 public class TTSSubtitles : MonoBehaviour
 {
-    [SerializeField]
-    public KeyCode key_repeat = KeyCode.R; //Repetir lo ya dicho
+    #region Singleton
+    private static TTSSubtitles _instance = null;
+
+    public static TTSSubtitles Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("TTS Subtitles not present in scene");
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
 
     [SerializeField]
     string nameFile; //Debe de guardarse en Application.persistentDataPath
