@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 // Manager que controla todas las opciones referentes a la accesibilidad de textos
-// incluyendo: TTS, tamanyo y fuente
+// incluyendo: tamanyo y fuente
 public class TextAccesibilityManager : MonoBehaviour
 {
     // Codigo de Singleton
