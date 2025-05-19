@@ -12,11 +12,15 @@ public class FontDropdown : MonoBehaviour
     // Referencia al propio dropdown 
     TMP_Dropdown fontDropdown;
 
+    // Referencia al script de guardado
+    Serializer serializer;
+
     // Crea las opciones del dropdown con las fuentes proporcionadas
     private void Start()
     {
-        fontDropdown = GetComponent<TMP_Dropdown>();
+        serializer = GetComponent<Serializer>();
 
+        fontDropdown = GetComponent<TMP_Dropdown>();
         fontDropdown.ClearOptions();
 
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
@@ -37,6 +41,12 @@ public class FontDropdown : MonoBehaviour
         {
             TextAccesibilityManager.Instance.onFontChanged(fonts[index]);
         }
+
+        serializer.Clear();
+        var dropdown = GetComponent<TMP_Dropdown>();
+        if (dropdown != null) serializer.Serialize(this.GetComponent<TMP_Dropdown>());
+        else Debug.LogWarning("El objeto no tiene asociado un componente Dropdown");
+        serializer.WriteToJSON(gameObject.name);
     }
 
 }
