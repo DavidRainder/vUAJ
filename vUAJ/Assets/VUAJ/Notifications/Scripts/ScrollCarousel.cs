@@ -64,9 +64,9 @@ namespace ScrollCarousel
         
         private void Start()
         {
-            FocusItem(StartItem);
+            // FocusItem(StartItem);
             ForceUpdate();
-            ResetAllVideos();
+            // ResetAllVideos();
         }
 
         private void Update()
@@ -320,7 +320,7 @@ namespace ScrollCarousel
             FocusItem(Items.IndexOf(item));
         }
 
-        private void FocusItem(int index)
+        public void FocusItem(int index)
         {
             if (index < 0 || index >= Items.Count) return;
 

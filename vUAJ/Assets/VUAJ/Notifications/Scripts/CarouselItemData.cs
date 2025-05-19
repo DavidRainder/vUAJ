@@ -60,12 +60,15 @@ public class CarouselItemController :  MonoBehaviour, IPointerClickHandler
         {
             case NotificationConfigType.Position:
                 carousel.StartItem = ((int)NotificationManager.Instance.CurrentPosition);
+                carousel.FocusItem(carousel.StartItem);
                 break;
             case NotificationConfigType.Size:
                 carousel.StartItem = ((int)NotificationManager.Instance.CurrentSize);
+                carousel.FocusItem(carousel.StartItem);
                 break;
             case NotificationConfigType.Style:
                 carousel.StartItem = ((int)NotificationManager.Instance.CurrentStyle);
+                carousel.FocusItem(carousel.StartItem);
                 break;
         }
     }
