@@ -1,9 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Esta clase actúa como una biblioteca centralizada de recursos para notificaciones, incluyendo
+/// íconos (Sprites) y sonidos (AudioClips). Los recursos se cargan automáticamente desde las carpetas 
+/// "Resources/NotificationIcons" y "Resources/NotificationSounds", y pueden ser consultados por nombre 
+/// desde cualquier parte del juego.
+/// </summary>
+/// 
 public class NotificationAssetLibrary : MonoBehaviour
 {
-
+    // Diccionarios privados para almacenar íconos y sonidos accesibles por nombre
     private Dictionary<string, Sprite> iconDict = new Dictionary<string, Sprite>();
     private Dictionary<string, AudioClip> soundDict = new Dictionary<string, AudioClip>();
 
@@ -38,9 +45,13 @@ public class NotificationAssetLibrary : MonoBehaviour
     #endregion
 
 
-
+    /// <summary>
+    /// Carga todos los íconos y sonidos de notificación desde las carpetas Resources.
+    /// Los archivos deben estar en "Resources/NotificationIcons" y "Resources/NotificationSounds".
+    /// </summary>
     private void LoadAssets()
     {
+        // Carga todos los sprites desde la carpeta correspondiente
         Sprite[] icons = Resources.LoadAll<Sprite>("NotificationIcons");
         foreach (var icon in icons)
         {
@@ -49,6 +60,7 @@ public class NotificationAssetLibrary : MonoBehaviour
                 iconDict.Add(key, icon);
         }
 
+        // Carga todos los sonidos desde la carpeta correspondiente
         AudioClip[] sounds = Resources.LoadAll<AudioClip>("NotificationSounds");
         foreach (var sound in sounds)
         {
@@ -58,6 +70,9 @@ public class NotificationAssetLibrary : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Devuelve un ícono  dado su nombre. Si no se encuentra, devuelve null y muestra una advertencia.
+    /// </summary>
     public Sprite GetIcon(string name)
     {
         if (string.IsNullOrEmpty(name)) return null;
@@ -70,6 +85,9 @@ public class NotificationAssetLibrary : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Devuelve un sonido dado su nombre. Si no se encuentra, devuelve null y muestra una advertencia.
+    /// </summary>
     public AudioClip GetSound(string name)
     {
         if (string.IsNullOrEmpty(name)) return null;

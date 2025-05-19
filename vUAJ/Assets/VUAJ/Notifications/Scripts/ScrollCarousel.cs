@@ -7,6 +7,12 @@ using UnityEngine.EventSystems;
 using System.ComponentModel;
 using UnityEngine.Video;
 
+/// <summary>
+/// Esta clase se ha obtenido del siguiente paquete de la Unity Asset Store:
+/// https://assetstore.unity.com/packages/tools/gui/scroll-carousel-306533?srsltid=AfmBOornHekEfCzShLaWwNsVRpIdQC8Pmx_dxGJHoqRNjmc2U_oRruIa
+/// El propósito de su inclusión es implementar la sección de "Carousel" en la escena de Configuración (Settings).
+/// </summary>
+
 namespace ScrollCarousel
 {
     public class Carousel : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
