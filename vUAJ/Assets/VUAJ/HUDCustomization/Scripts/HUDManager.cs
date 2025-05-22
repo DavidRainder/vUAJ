@@ -194,7 +194,14 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"{type.ToString()} HUD no guardado en {path}, se mantiene el default"); // Si el prefab de HUD asignado está bien no causará ningún fallo
+            if(type == HUDTypes.customHUD)
+            {
+                Debug.LogWarning($"{type.ToString()} HUD no guardado en {path}, se mantiene el default"); // Si el prefab de HUD asignado está bien no causará ningún fallo
+                applySavedConfigToHUD(HUDObject, HUDTypes.defaultHUD);
+            } else
+            {
+                Debug.LogWarning($"Default settings guardadas incorrectamente en {path}, no se pudo aplicar al HUD"); // Si el prefab de HUD asignado está bien no causará ningún fallo
+            }
             return false;
         }
         return true;
